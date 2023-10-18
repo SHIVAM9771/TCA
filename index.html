@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Trade Combinator Analyzer</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        #container {
+            display: flex;
+            max-height: 1080px;
+            height: 100%;
+            width: 100%;
+            max-width: 1920px;
+            padding: 20px;
+            background-color: #dedede;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            flex-direction: column;
+        }
+
+        #heading {
+            font-family: 'Arial Black', sans-serif;
+            font-size: 32px;
+            text-align: center; /* Center the heading */
+            margin-bottom: 20px; /* Add some space below the heading */
+        }
+
+        #content {
+            display: flex;
+            width: 100%;
+            max-width: 100%;
+        }
+
+        #user-input {
+            flex: 2;
+            padding: 20px;
+        }
+
+        .input-group {
+            margin: 10px 0;
+        }
+
+        .input-label {
+            font-weight: bold;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        .btn-group {
+            text-align: center; /* Center the buttons */
+        }
+
+        .btn {
+            background-color: #007BFF;
+            color: rgb(238, 236, 236);
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+        }
+
+        .btn.reset {
+            background-color: #f44336;
+        }
+
+        .chart {
+            flex: 4;
+            background-color: rgb(236, 236, 236);
+            display: flex;
+            flex-direction: column;
+        }
+
+        #results {
+            flex: 1;
+            padding: 20px;
+        }
+
+        #myChart {
+            flex: 1;
+        }
+
+        .dark-mode {
+            background-color: #1f1f1f;
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            #container {
+                padding: 10px;
+            }
+
+            #user-input {
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="container">
+        <div id="heading">Trade Combinator Analyzer</div>
+
+        <div id="content">
+            <div id="user-input">
+                <div class="input-group">
+                    <label class="input-label" for="tradePerDay">Trade per day:</label>
+                    <input type="text" id="tradePerDay" value="3" />
+                </div>
+
+                <div class="input-group">
+                    <label class="input-label" for="numDays">Number of days:</label>
+                    <input type="text" id="numDays" value="1" />
+                </div>
+
+                <div class="input-group">
+                    <label class="input-label" for="riskReward">Risk reward ratio:</label>
+                    <input type="text" id="riskReward" value="2.0" />
+                </div>
+
+                <div class="input-group">
+                    <label class="input-label" for="tradeAmount">Trade amount:</label>
+                    <input type="text" id="tradeAmount" value="100" />
+                </div>
+
+                <div class="input-group">
+                    <label class="input-label" for="ndtpc">Number of Days to Plot Chart:</label>
+                    <input type="text" id="ndtpc" value="20" />
+                </div>
+
+                <div class="btn-group">
+                    <button class="btn" id="calculateBtn">Calculate</button>
+                    <button class="btn reset" id="resetBtn">Reset</button>
+                    <button class="btn" id="generateBtn">Generate</button>
+                </div>
+            </div>
+
+            <div class="chart">
+                <canvas id="myChart"></canvas>
+            </div>
+        </div>
+
+        <div id="results">
+            <!-- Results will be displayed here -->
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const calculateButton = document.querySelector("#calculateBtn");
+            const generateButton = document.querySelector("#generateBtn");
+            const resetButton = document.querySelector("#resetBtn");
+            const resultsDiv = document.querySelector("#results");
+            const ctx = document.getElementById('myChart').getContext('2d');
+
+            let generatedTrades = [];
+
+            // Initialize an empty data array for the chart
+            const chartData = {
+                labels: [],
+                datasets: [
+                    {
+                        label: 'Net Profit/Loss',
+                        data: [],
+                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        borderWidth: 1,
+                    },
+                ],
+            };
+
+            const chartOptions = {
+                responsive: true,
+                scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Number of Days',
+                        },
+                    },
+                    y: {
+                        title: {
+                            display: true,
+                            text: 'Net Profit/Loss',
+                        },
+                    },
+                },
+            };
+
+            const myChart = new Chart(ctx, {
+                type: 'line',
+                data: chartData,
+                options: chartOptions,
+            });
+
+            calculateButton.addEventListener("click", function () {
+                // Get input values
+                const tradePerDay = parseInt(document.querySelector("#tradePerDay").value);
+                const numDays = parseInt(document.querySelector("#numDays").value);
+                const riskReward = parseFloat(document.querySelector("#riskReward").value);
+                const tradeAmount = parseFloat(document.querySelector("#tradeAmount").value);
+
+                // Calculate the number of combinations
+                const totalCombinations = Math.pow(2, tradePerDay * numDays);
+
+                // Initialize counters for loss and profit
+                let lossCount = 0;
+                let profitCount = 0;
+                let breakEvenCount = 0;
+
+                // Helper function to calculate combinations recursively
+                function calculateCombinations(remainingTrades, currentProfitLoss) {
+                    if (remainingTrades === 0) {
+                        if (currentProfitLoss > 0) {
+                            profitCount++;
+                        } else if (currentProfitLoss < 0) {
+                            lossCount++;
+                        } else {
+                            breakEvenCount++;
+                        }
+                        return;
+                    }
+
+                    // Simulate a win
+                    calculateCombinations(remainingTrades - 1, currentProfitLoss + tradeAmount * riskReward);
+
+                    // Simulate a loss
+                    calculateCombinations(remainingTrades - 1, currentProfitLoss - tradeAmount);
+                }
+
+                // Calculate combinations
+                calculateCombinations(tradePerDay * numDays, 0);
+
+                // Calculate percentages
+                const profitPercentage = (profitCount / totalCombinations * 100).toFixed(2);
+                const lossPercentage = (lossCount / totalCombinations * 100).toFixed(2);
+                const breakEvenPercentage = (breakEvenCount / totalCombinations * 100).toFixed(2);
+
+                // Display the results
+                resultsDiv.innerHTML = `
+                Total Combinations: ${totalCombinations}<br>
+                Combinations in Profit: ${profitCount} (${profitPercentage}%)<br>
+                Combinations in Loss: ${lossCount} (${lossPercentage}%)<br>
+                Break-Even Combinations: ${breakEvenCount} (${breakEvenPercentage}%)`;
+            });
+
+            generateButton.addEventListener("click", function () {
+                // Clear the existing generated trades
+                generatedTrades = [];
+
+                // Get input values
+                const tradePerDay = parseInt(document.querySelector("#tradePerDay").value);
+                const ndtpc = parseInt(document.querySelector("#ndtpc").value);
+                const tradeAmount = parseFloat(document.querySelector("#tradeAmount").value);
+                const riskReward = parseFloat(document.querySelector("#riskReward").value);
+
+                // Clear the resultsDiv content before updating
+                resultsDiv.innerHTML = '';
+
+                // Generate random trades and calculate net profit/loss
+                let netProfitLoss = 0;
+                let netProfitLossPerDay = [];
+
+                for (let day = 0; day < ndtpc; day++) {
+                    let dailyProfitLoss = 0;
+                    const dailyTrades = []; // Array to store trades for the day
+
+                    for (let trade = 0; trade < tradePerDay; trade++) {
+                        const randomOutcome = Math.random(); // Random value between 0 and 1
+
+                        if (randomOutcome < 0.5) { // 50% chance of win or loss
+                            const winAmount = tradeAmount * riskReward;
+                            dailyProfitLoss += winAmount;
+                            dailyTrades.push(`Win`);
+                        } else {
+                            const lossAmount = tradeAmount;
+                            dailyProfitLoss -= lossAmount;
+                            dailyTrades.push(`Loss`);
+                        }
+                    }
+
+                    netProfitLoss += dailyProfitLoss;
+                    netProfitLossPerDay.push(netProfitLoss);
+
+                    // Create a list element for the day's trades
+                    const dayTradeList = document.createElement('ul');
+                    dayTradeList.innerHTML = `${day + 1}: ${dailyTrades.join(', ')}`;
+
+                    // Append the day's trade list to the resultsDiv
+                    resultsDiv.appendChild(dayTradeList);
+                }
+
+                // Display the net profit/loss above the chart
+                const netProfitLossDiv = document.createElement('div');
+                netProfitLossDiv.innerHTML = `<p>Net Profit/Loss: ${netProfitLoss}</p>`;
+                resultsDiv.insertBefore(netProfitLossDiv, resultsDiv.firstChild);
+
+                // Update the chart data
+                chartData.labels = Array.from({ length: ndtpc }, (_, i) => `Day ${i + 1}`);
+                chartData.datasets[0].data = netProfitLossPerDay;
+                myChart.update();
+            });
+
+            resetButton.addEventListener("click", function () {
+                // Clear all input fields
+                document.querySelector("#tradePerDay").value = '';
+                document.querySelector("#ndtpc").value = '';
+                document.querySelector("#riskReward").value = '';
+                document.querySelector("#tradeAmount").value = '';
+
+                // Clear the results
+                resultsDiv.innerHTML = '';
+
+                // Clear the chart data and update the chart
+                chartData.labels = [];
+                chartData.datasets[0].data = [];
+                myChart.update();
+            });
+        });
+    </script>
+</body>
+
+</html>
