@@ -63,13 +63,19 @@
         }
 
         button {
-            background-color: #007BFF;
+            background-color: #007bff;
             color: #000000;
             padding: 10px 20px;
             border: none;
             border-radius: 4px;
             cursor: pointer;
             margin-top: 10px;
+            
+        }
+
+        .reset-button {
+            background-color: #f44336; /* Change the background color to red */
+            color: #000000; /* Change the text color to white */
         }
 
         a {
@@ -84,43 +90,42 @@
             <h1>Position Sizing</h1>
 
             <label for="accountBalance">Account Balance ($):</label>
-            <input type="number" id="accountBalance" placeholder="Enter your account balance">
+            <input type="number" id="accountBalance" placeholder="Enter your account balance" value="50000" />
 
             <label for="riskPercentage">Risk Amount Per Trade:</label>
-            <input type="number" id="riskPercentage" placeholder="Enter your risk Amount">
+            <input type="number" id="riskPercentage" placeholder="Enter your risk Amount" value="500" />
 
             <label for="lotsize">Lot Size:</label>
-            <input type="number" id="lotsize" placeholder="Enter lot size">
+            <input type="number" id="lotsize" placeholder="Enter lot size" value="15" />
 
             <label for="riskReward">Risk Reward Ratio:</label>
-            <input type="number" id="riskReward" placeholder="Enter risk reward ratio">
+            <input type="number" id="riskReward" placeholder="Enter risk reward ratio" value="3.0" />
 
             <label for="entryPrice">Entry Price:</label>
-            <input type="number" id="entryPrice" placeholder="Enter entry price">
-            
-            <label for="stopLoss">Stop Loss ($):</label>
-            <input type="number" id="stopLoss" placeholder="Enter your stop loss">
+            <input type="number" id="entryPrice" placeholder="Enter entry price" value="100" />
 
+            <label for="stopLoss">Stop Loss ($):</label>
+            <input type="number" id="stopLoss" placeholder="Enter your stop loss" value="20" />
         </div>
 
         <div class="right-section">
-
             <label for="positionSize">Position Size (In Lot):</label>
-            <input type="number" id="positionSize" disabled>
-            
+            <input type="number" id="positionSize" disabled />
+
             <label for="targetPrice">Target Price:</label>
-            <input type="number" id="targetPrice" disabled>
+            <input type="number" id="targetPrice" disabled />
 
             <label for="stopLossPrice">Stop Loss Price:</label>
-            <input type="number" id="stopLossPrice" disabled>
+            <input type="number" id="stopLossPrice" disabled />
 
             <label for="expectedProfit">Expected Profit:</label>
-            <input type="number" id="expectedProfit" disabled>
+            <input type="number" id="expectedProfit" disabled />
 
             <label for="expectedLoss">Expected Loss:</label>
-            <input type="number" id="expectedLoss" disabled>
+            <input type="number" id="expectedLoss" disabled />
 
             <button id="calculateButton">Calculate Position Size</button>
+            <button id="resetButton" class="reset-button">Reset</button> 
             <a href="index.html"><button id="redirectBtn">Back</button></a>
         </div>
     </div>
@@ -148,13 +153,22 @@
                 const riskReward = parseFloat(riskRewardInput.value);
                 const entryPrice = parseFloat(entryPriceInput.value);
 
-                if (!isNaN(accountBalance) && !isNaN(riskPercentage) && !isNaN(stopLoss) && !isNaN(lotsize) && !isNaN(riskReward) && !isNaN(entryPrice)) {
-                    const positionSize = (riskPercentage / stopLoss) / lotsize;
+                if (
+                    !isNaN(accountBalance) &&
+                    !isNaN(riskPercentage) &&
+                    !isNaN(stopLoss) &&
+                    !isNaN(lotsize) &&
+                    !isNaN(riskReward) &&
+                    !isNaN(entryPrice)
+                ) {
+                    const positionSize = riskPercentage / stopLoss / lotsize;
                     positionSizeInput.value = positionSize.toFixed(0);
-                    const targetPrice = entryPrice + (stopLoss * riskReward);
+                    const targetPrice = entryPrice + stopLoss * riskReward;
                     const stopLossPrice = entryPrice - stopLoss;
-                    const expectedProfit = positionSize * lotsize * (targetPrice - entryPrice);
-                    const expectedLoss = positionSize * lotsize * (entryPrice - stopLossPrice);
+                    const expectedProfit =
+                        positionSize * lotsize * (targetPrice - entryPrice);
+                    const expectedLoss =
+                        positionSize * lotsize * (entryPrice - stopLossPrice);
 
                     targetPriceInput.value = targetPrice.toFixed(2);
                     stopLossPriceInput.value = stopLossPrice.toFixed(2);
@@ -163,6 +177,22 @@
                 } else {
                     alert("Please enter valid numbers for all inputs.");
                 }
+                const resetButton = document.querySelector("#resetButton");
+
+                resetButton.addEventListener("click", function () {
+                    // Clear all input fields
+                    accountBalanceInput.value = "";
+                    riskPercentageInput.value = "";
+                    stopLossInput.value = "";
+                    lotsizeInput.value = "";
+                    riskRewardInput.value = "";
+                    entryPriceInput.value = "";
+                    targetPriceInput.value = "";
+                    stopLossPriceInput.value = "";
+                    expectedProfitInput.value = "";
+                    expectedLossInput.value = "";
+                    positionSizeInput.value = "";
+                });
             });
         });
     </script>
