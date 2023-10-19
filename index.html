@@ -147,6 +147,28 @@
                 padding: 10px;
             }
         }
+
+ @media (max-width: 768px) { 
+            .chart {
+                order: -1; /* Move the chart above other content */
+            }
+
+            .logo-container, .title-slogan {
+                text-align: center; /* Center align the logo and title for better mobile display */
+            }
+
+            #user-input, .btn-group {
+                flex-direction: column; /* Arrange input fields and buttons in a column */
+            }
+
+            input[type="text"] {
+                width: 100%; /* Full width for input fields */
+            }
+
+            .btn {
+                width: 100%; /* Full width for buttons */
+            }
+        } 
     </style>
 </head>
 
