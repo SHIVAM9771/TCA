@@ -335,7 +335,7 @@
         for (let trade = 0; trade < tradePerDay; trade++) {
             const randomOutcome = Math.random(); // Random value between 0 and 1
 
-            if (randomOutcome < 0.4) {
+            if (randomOutcome < 0.5) {
                 // 40% chance of win or loss
                 const winAmount = tradeAmount * riskReward;
                 dailyProfitLoss += winAmount;
@@ -373,9 +373,9 @@
 
     const profitLossPercentageDiv = document.createElement("div");
     profitLossPercentageDiv.innerHTML = `
-        <p>Percentage of Days in Profit: ${percentageProfit.toFixed(2)}%</p>
-        <p>Percentage of Days in Loss: ${percentageLoss.toFixed(2)}%</p>
-        <p>Percentage of Days in Break-Even: ${percentageBreakEven.toFixed(2)}%</p>
+        <p>Days in Profit: ${percentageProfit.toFixed(2)}%</p>
+        <p>Days in Loss: ${percentageLoss.toFixed(2)}%</p>
+        <p>Days in Break-Even: ${percentageBreakEven.toFixed(2)}%</p>
     `;
     resultsDiv.appendChild(profitLossPercentageDiv);
 
