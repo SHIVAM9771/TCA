@@ -335,7 +335,7 @@
         for (let trade = 0; trade < tradePerDay; trade++) {
             const randomOutcome = Math.random(); // Random value between 0 and 1
 
-            if (randomOutcome < 0.4) {
+            if (randomOutcome < 0.5) {
                 // 40% chance of win or loss
                 const winAmount = tradeAmount * riskReward;
                 dailyProfitLoss += winAmount;
