@@ -307,61 +307,97 @@
             });
 
             generateButton.addEventListener("click", function () {
-                // Clear the existing generated trades
-                generatedTrades = [];
+    // Clear the existing generated trades
+    generatedTrades = [];
 
-                // Get input values
-                const tradePerDay = parseInt(document.querySelector("#tradePerDay").value);
-                const ndtpc = parseInt(document.querySelector("#ndtpc").value);
-                const tradeAmount = parseFloat(document.querySelector("#tradeAmount").value);
-                const riskReward = parseFloat(document.querySelector("#riskReward").value);
+    // Get input values
+    const tradePerDay = parseInt(document.querySelector("#tradePerDay").value);
+    const ndtpc = parseInt(document.querySelector("#ndtpc").value);
+    const tradeAmount = parseFloat(document.querySelector("#tradeAmount").value);
+    const riskReward = parseFloat(document.querySelector("#riskReward").value);
 
-                // Clear the resultsDiv content before updating
-                resultsDiv.innerHTML = '';
+    // Clear the resultsDiv content before updating
+    resultsDiv.innerHTML = '';
 
-                // Generate random trades and calculate net profit/loss
-                let netProfitLoss = 0;
-                let netProfitLossPerDay = [];
+    // Generate random trades and calculate net profit/loss
+    let netProfitLoss = 0;
+    let netProfitLossPerDay = [];
+    let allTrades = [];
 
-                for (let day = 0; day < ndtpc; day++) {
-                    let dailyProfitLoss = 0;
-                    const dailyTrades = []; // Array to store trades for the day
+    let daysInProfit = 0;
+    let daysInLoss = 0;
+    let daysInBreakEven = 0;
 
-                    for (let trade = 0; trade < tradePerDay; trade++) {
-                        const randomOutcome = Math.random(); // Random value between 0 and 1
+    for (let day = 0; day < ndtpc; day++) {
+        let dailyProfitLoss = 0;
+        const dailyTrades = []; // Array to store trades for the day
 
-                        if (randomOutcome < 0.5) { // 50% chance of win or loss
-                            const winAmount = tradeAmount * riskReward;
-                            dailyProfitLoss += winAmount;
-                            dailyTrades.push(`Win`);
-                        } else {
-                            const lossAmount = tradeAmount;
-                            dailyProfitLoss -= lossAmount;
-                            dailyTrades.push(`Loss`);
-                        }
-                    }
+        for (let trade = 0; trade < tradePerDay; trade++) {
+            const randomOutcome = Math.random(); // Random value between 0 and 1
 
-                    netProfitLoss += dailyProfitLoss;
-                    netProfitLossPerDay.push(netProfitLoss);
+            if (randomOutcome < 0.4) {
+                // 40% chance of win or loss
+                const winAmount = tradeAmount * riskReward;
+                dailyProfitLoss += winAmount;
+                dailyTrades.push(`Win`);
+            } else {
+                const lossAmount = tradeAmount;
+                dailyProfitLoss -= lossAmount;
+                dailyTrades.push(`Loss`);
+            }
+        }
 
-                    // Create a list element for the day's trades
-                    const dayTradeList = document.createElement('ul');
-                    dayTradeList.innerHTML = `${day + 1}: ${dailyTrades.join(', ')}`;
+        netProfitLoss += dailyProfitLoss;
+        netProfitLossPerDay.push(netProfitLoss);
 
-                    // Append the day's trade list to the resultsDiv
-                    resultsDiv.appendChild(dayTradeList);
-                }
+        allTrades.push(`${day + 1}: ${dailyTrades.join(", ")}`);
 
-                // Display the net profit/loss above the chart
-                const netProfitLossDiv = document.createElement('div');
-                netProfitLossDiv.innerHTML = `<p>Net Profit/Loss: ${netProfitLoss}</p>`;
-                resultsDiv.insertBefore(netProfitLossDiv, resultsDiv.firstChild);
+        if (dailyProfitLoss > 0) {
+            daysInProfit++;
+        } else if (dailyProfitLoss < 0) {
+            daysInLoss++;
+        } else {
+            daysInBreakEven++;
+        }
+    }
 
-                // Update the chart data
-                chartData.labels = Array.from({ length: ndtpc }, (_, i) => `Day ${i + 1}`);
-                chartData.datasets[0].data = netProfitLossPerDay;
-                myChart.update();
-            });
+    // Calculate the percentages
+    const percentageProfit = (daysInProfit / ndtpc) * 100;
+    const percentageLoss = (daysInLoss / ndtpc) * 100;
+    const percentageBreakEven = (daysInBreakEven / ndtpc) * 100;
+
+    // Display the net profit/loss, percentage of profit, percentage of loss, and percentage of break-even
+    const netProfitLossDiv = document.createElement("div");
+    netProfitLossDiv.innerHTML = `<p>Net Profit/Loss: ${netProfitLoss}</p>`;
+    resultsDiv.appendChild(netProfitLossDiv);
+
+    const profitLossPercentageDiv = document.createElement("div");
+    profitLossPercentageDiv.innerHTML = `
+        <p>Percentage of Days in Profit: ${percentageProfit.toFixed(2)}%</p>
+        <p>Percentage of Days in Loss: ${percentageLoss.toFixed(2)}%</p>
+        <p>Percentage of Days in Break-Even: ${percentageBreakEven.toFixed(2)}%</p>
+    `;
+    resultsDiv.appendChild(profitLossPercentageDiv);
+
+    // Display all randomly generated trades
+    const allTradesDiv = document.createElement("div");
+    allTradesDiv.innerHTML = `<p>All Randomly Generated Trades:</p>`;
+    resultsDiv.appendChild(allTradesDiv);
+
+    const tradesList = document.createElement("ul");
+    allTrades.forEach((trade) => {
+        const listItem = document.createElement("li");
+        listItem.textContent = trade;
+        tradesList.appendChild(listItem);
+    });
+    resultsDiv.appendChild(tradesList);
+
+    // Update the chart data (assuming you have already set up the chart)
+    chartData.labels = Array.from({ length: ndtpc }, (_, i) => `Day ${i + 1}`);
+    chartData.datasets[0].data = netProfitLossPerDay;
+    myChart.update();
+});
+
 
             resetButton.addEventListener("click", function () {
                 // Clear all input fields
