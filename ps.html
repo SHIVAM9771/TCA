@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Money Management and Position Sizing</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        #container {
+            max-width: 1080px;
+            max-height: 1920px;
+            height: 95%;
+            width: 90%;
+            margin: 20px;
+            background-color: #ea1e1e;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .left-section {
+            flex: 1;
+            padding: 20px;
+            background-color: #86b5eb;
+            color: #fff;
+        }
+
+        .right-section {
+            flex: 2;
+            padding: 20px;
+            background-color: #d8f5ff;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        label {
+            font-weight: bold;
+            color: #333;
+        }
+
+        input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            margin-bottom: 10px;
+        }
+
+        button {
+            background-color: #007BFF;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        a {
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="container">
+        <div class="left-section">
+            <h1>Position Sizing</h1>
+
+            <label for="accountBalance">Account Balance ($):</label>
+            <input type="number" id="accountBalance" placeholder="Enter your account balance">
+
+            <label for="riskPercentage">Risk Amount Per Trade:</label>
+            <input type="number" id="riskPercentage" placeholder="Enter your risk Amount">
+
+            <label for="lotsize">Lot Size:</label>
+            <input type="number" id="lotsize" placeholder="Enter lot size">
+
+            <label for="riskReward">Risk Reward Ratio:</label>
+            <input type="number" id="riskReward" placeholder="Enter risk reward ratio">
+
+            <label for="entryPrice">Entry Price:</label>
+            <input type="number" id="entryPrice" placeholder="Enter entry price">
+            
+            <label for="stopLoss">Stop Loss ($):</label>
+            <input type="number" id="stopLoss" placeholder="Enter your stop loss">
+
+        </div>
+
+        <div class="right-section">
+
+            <label for="positionSize">Position Size (In Lot):</label>
+            <input type="number" id="positionSize" disabled>
+            
+            <label for="targetPrice">Target Price:</label>
+            <input type="number" id="targetPrice" disabled>
+
+            <label for="stopLossPrice">Stop Loss Price:</label>
+            <input type="number" id="stopLossPrice" disabled>
+
+            <label for="expectedProfit">Expected Profit:</label>
+            <input type="number" id="expectedProfit" disabled>
+
+            <label for="expectedLoss">Expected Loss:</label>
+            <input type="number" id="expectedLoss" disabled>
+
+            <button id="calculateButton">Calculate Position Size</button>
+            <a href="index.html"><button id="redirectBtn">Back</button></a>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const accountBalanceInput = document.querySelector("#accountBalance");
+            const riskPercentageInput = document.querySelector("#riskPercentage");
+            const stopLossInput = document.querySelector("#stopLoss");
+            const lotsizeInput = document.querySelector("#lotsize");
+            const riskRewardInput = document.querySelector("#riskReward");
+            const entryPriceInput = document.querySelector("#entryPrice");
+            const targetPriceInput = document.querySelector("#targetPrice");
+            const stopLossPriceInput = document.querySelector("#stopLossPrice");
+            const expectedProfitInput = document.querySelector("#expectedProfit");
+            const expectedLossInput = document.querySelector("#expectedLoss");
+            const calculateButton = document.querySelector("#calculateButton");
+            const positionSizeInput = document.querySelector("#positionSize");
+
+            calculateButton.addEventListener("click", function () {
+                const accountBalance = parseFloat(accountBalanceInput.value);
+                const riskPercentage = parseFloat(riskPercentageInput.value);
+                const stopLoss = parseFloat(stopLossInput.value);
+                const lotsize = parseFloat(lotsizeInput.value);
+                const riskReward = parseFloat(riskRewardInput.value);
+                const entryPrice = parseFloat(entryPriceInput.value);
+
+                if (!isNaN(accountBalance) && !isNaN(riskPercentage) && !isNaN(stopLoss) && !isNaN(lotsize) && !isNaN(riskReward) && !isNaN(entryPrice)) {
+                    const positionSize = (riskPercentage / stopLoss) / lotsize;
+                    positionSizeInput.value = positionSize.toFixed(0);
+                    const targetPrice = entryPrice + (stopLoss * riskReward);
+                    const stopLossPrice = entryPrice - stopLoss;
+                    const expectedProfit = positionSize * lotsize * (targetPrice - entryPrice);
+                    const expectedLoss = positionSize * lotsize * (entryPrice - stopLossPrice);
+
+                    targetPriceInput.value = targetPrice.toFixed(2);
+                    stopLossPriceInput.value = stopLossPrice.toFixed(2);
+                    expectedProfitInput.value = expectedProfit.toFixed(2);
+                    expectedLossInput.value = expectedLoss.toFixed(2);
+                } else {
+                    alert("Please enter valid numbers for all inputs.");
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
