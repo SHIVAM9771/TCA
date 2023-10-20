@@ -482,7 +482,7 @@
                 } else {
                     netProfitLossElement.style.color = 'white';
                 }
-                netProfitLossElement.textContent = `Net Profit/Loss: ${netProfitLoss}`;
+                netProfitLossElement.textContent = `P&L: ${netProfitLoss}`;
 
 
 
@@ -490,8 +490,8 @@
                 const netProfitLossDiv = document.createElement("div");
                 const maxDrawdown = calculateMaxDrawdown(netProfitLossValues);
                 resultsDiv.innerHTML = `
-                    Net Profit/Loss: ${netProfitLoss}<br>
-                    Maximum Drawdown: ${maxDrawdown}<br>
+                    Net P&L: ${netProfitLoss}<br>
+                    Max Loss: ${maxDrawdown}<br>
                 `;
                 resultsDiv.appendChild(netProfitLossDiv);
 
