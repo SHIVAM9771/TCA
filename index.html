@@ -2,11 +2,11 @@
 <html>
 
 <head>
-    <meta name="google-adsense-account" content="ca-pub-7746606719744521">
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7746606719744521"
-     crossorigin="anonymous"></script>
+        crossorigin="anonymous"></script>
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="icon" href="https://drive.google.com/uc?export=view&id=196OrlA-nQUcCBw5dQ90wqdDhv9nxSr2T" type="image/x-icon">
+    <link rel="icon" href="https://drive.google.com/uc?export=view&id=196OrlA-nQUcCBw5dQ90wqdDhv9nxSr2T"
+        type="image/x-icon">
 
     <title>Trade Combinator Analyzer</title>
     <style>
@@ -27,7 +27,6 @@
             transform: translateY(0);
             transition: opacity 1s ease, transform 1s ease;
         }
-        
 
         #heading {
             font-family: 'Arial Black', sans-serif;
@@ -202,6 +201,18 @@
             transform: scale(1.02);
             transition: transform 0.3s;
         }
+
+        /* Styles for the net profit/loss display */
+        .net-profit-loss {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background-color: rgba(0, 0, 0, 0.5);
+            color: #fff;
+            border-radius: 5px;
+            padding: 5px;
+            font-size: 14px;
+        }
     </style>
 </head>
 
@@ -209,8 +220,7 @@
     <div id="container">
         <div class="logo-container">
             <div class="logo-circle">
-                <img class="logo"
-                    src="https://drive.google.com/uc?export=view&id=1O1TCrghjtD9HIaDJLlLmKBh7941Yn4Gz"
+                <img class="logo" src="https://drive.google.com/uc?export=view&id=1O1TCrghjtD9HIaDJLlLmKBh7941Yn4Gz"
                     alt="Logo">
             </div>
             <div class="title-slogan">
@@ -264,6 +274,7 @@
             </div>
 
             <div class="chart">
+                <div class="net-profit-loss" id="netProfitLoss">Net Profit/Loss: 0</div>
                 <canvas id="myChart"></canvas>
             </div>
         </div>
@@ -274,7 +285,6 @@
     </div>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-zoom/0.7.7/chartjs-plugin-zoom.min.js"></script>
-
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             const container = document.querySelector("#container");
@@ -283,8 +293,11 @@
             const resetButton = document.querySelector("#resetBtn");
             const resultsDiv = document.querySelector("#results");
             const ctx = document.getElementById('myChart').getContext('2d');
+            const netProfitLossElement = document.querySelector("#netProfitLoss");
+
 
             let generatedTrades = [];
+            let netProfitLossValues = [];
 
             // Initialize an empty data array for the chart
             const chartData = {
@@ -292,7 +305,7 @@
                 datasets: [
                     {
                         label: 'Net Profit/Loss',
-                        data: [],
+                        data: [], // This will be populated with net profit/loss values
                         fill: true,
                         borderColor: 'rgba(75, 192, 192, 1)',
                         tension: 0.4,
@@ -320,6 +333,14 @@
                     fillAboveBelow: {
                         above: 'rgba(75, 192, 192, 0.2)',
                         below: 'rgba(255, 0, 0, 0.2)',
+                    },
+                    tooltip: {
+                        enabled: true,
+                        callbacks: {
+                            label: function (context) {
+                                return 'Net Profit/Loss: ' + context.parsed.y;
+                            },
+                        },
                     },
                 },
                 scales: {
@@ -389,7 +410,8 @@
                     Total Combinations: ${totalCombinations}<br>
                     Combinations in Profit: ${profitCount} (${profitPercentage}%)<br>
                     Combinations in Loss: ${lossCount} (${lossPercentage}%)<br>
-                    Break-Even Combinations: ${breakEvenCount} (${breakEvenPercentage}%)`;
+                    Break-Even Combinations: ${breakEvenCount} (${breakEvenPercentage}%)<br>
+                `;
 
                 // Add animations for results
                 resultsDiv.style.opacity = 0;
@@ -403,30 +425,30 @@
             generateButton.addEventListener("click", function () {
                 // Clear the existing generated trades
                 generatedTrades = [];
-            
+                netProfitLossValues = [];
+
                 // Get input values
                 const tradePerDay = parseInt(document.querySelector("#tradePerDay").value);
                 const ndtpc = parseInt(document.querySelector("#ndtpc").value);
                 const tradeAmount = parseFloat(document.querySelector("#tradeAmount").value);
                 const riskReward = parseFloat(document.querySelector("#riskReward").value);
-            
+
                 // Clear the resultsDiv content before updating
                 resultsDiv.innerHTML = '';
-            
+
                 // Generate random trades and calculate net profit/loss
                 let netProfitLoss = 0;
-                let netProfitLossPerDay = [];
                 let daysInProfit = 0;
                 let daysInLoss = 0;
                 let daysInBreakEven = 0;
-            
+
                 for (let day = 0; day < ndtpc; day++) {
                     let dailyProfitLoss = 0;
                     const dailyTrades = [];
-            
+
                     for (let trade = 0; trade < tradePerDay; trade++) {
                         const randomOutcome = Math.random();
-            
+
                         if (randomOutcome < 0.5) {
                             const winAmount = tradeAmount * riskReward;
                             dailyProfitLoss += winAmount;
@@ -437,10 +459,10 @@
                             dailyTrades.push(`Loss`);
                         }
                     }
-            
+
                     netProfitLoss += dailyProfitLoss;
-                    netProfitLossPerDay.push(netProfitLoss);
-            
+                    netProfitLossValues.push(netProfitLoss);
+
                     if (dailyProfitLoss > 0) {
                         daysInProfit++;
                     } else if (dailyProfitLoss < 0) {
@@ -448,29 +470,45 @@
                     } else {
                         daysInBreakEven++;
                     }
-            
+
                     generatedTrades.push(dailyTrades);
                 }
-            
+
+                // Display the net profit/loss with appropriate colors
+                if (netProfitLoss > 0) {
+                    netProfitLossElement.style.color = 'green';
+                } else if (netProfitLoss < 0) {
+                    netProfitLossElement.style.color = 'red';
+                } else {
+                    netProfitLossElement.style.color = 'white';
+                }
+                netProfitLossElement.textContent = `Net Profit/Loss: ${netProfitLoss}`;
+
+
+
                 // Display the net profit/loss and percentages
                 const netProfitLossDiv = document.createElement("div");
-                netProfitLossDiv.innerHTML = `<p>Net Profit/Loss: ${netProfitLoss}</p>`;
+                const maxDrawdown = calculateMaxDrawdown(netProfitLossValues);
+                resultsDiv.innerHTML = `
+                    Net Profit/Loss: ${netProfitLoss}<br>
+                    Maximum Drawdown: ${maxDrawdown}<br>
+                `;
                 resultsDiv.appendChild(netProfitLossDiv);
-            
+
                 const profitLossPercentageDiv = document.createElement("div");
                 profitLossPercentageDiv.innerHTML = `
-                    <p>Days in Profit: ${daysInProfit} (${((daysInProfit / ndtpc) * 100).toFixed(2)}%)</p>
-                    <p>Days in Loss: ${daysInLoss} (${((daysInLoss / ndtpc) * 100).toFixed(2)}%)</p>
-                    <p>Days in Break-Even: ${daysInBreakEven} (${((daysInBreakEven / ndtpc) * 100).toFixed(2)}%)</p>
+                    Days in Profit: ${daysInProfit} (${((daysInProfit / ndtpc) * 100).toFixed(2)}%)<br>
+                    Days in Loss: ${daysInLoss} (${((daysInLoss / ndtpc) * 100).toFixed(2)}%)<br>
+                    Days in Break-Even: ${daysInBreakEven} (${((daysInBreakEven / ndtpc) * 100).toFixed(2)}%)<br>
                 `;
                 resultsDiv.appendChild(profitLossPercentageDiv);
-            
+
                 // Display the generated trades
                 for (let day = 0; day < ndtpc; day++) {
                     const dayTradeList = document.createElement('ul');
                     dayTradeList.innerHTML = `${day + 1}: ${generatedTrades[day].join(', ')}`;
                     resultsDiv.appendChild(dayTradeList);
-            
+
                     // Add animations for generated trades
                     dayTradeList.style.opacity = 0;
                     dayTradeList.style.transform = "translateY(20px)";
@@ -479,13 +517,11 @@
                         dayTradeList.style.transform = "translateY(0)";
                     }, 25 * (day + 1));
                 }
-            
+
                 chartData.labels = Array.from({ length: ndtpc }, (_, i) => i + 1);
-                chartData.datasets[0].data = netProfitLossPerDay;
+                chartData.datasets[0].data = netProfitLossValues;
                 myChart.update();
             });
-            
-            
 
             resetButton.addEventListener("click", function () {
                 document.querySelector("#tradePerDay").value = '';
@@ -506,6 +542,26 @@
                     resultsDiv.style.transform = "translateY(0)";
                 }, 300);
             });
+
+            // Function to calculate the maximum drawdown
+            function calculateMaxDrawdown(profitLossPerDay) {
+                let maxLoss = 0;
+                let currentLoss = 0;
+
+                for (const value of profitLossPerDay) {
+                    if (value < 0) {
+                        currentLoss = value;
+                        if (currentLoss < maxLoss) {
+                            maxLoss = currentLoss;
+                        }
+                    } else {
+                        currentLoss = 0;
+                    }
+                }
+
+                return Math.abs(maxLoss); // Return the maximum loss as a positive value
+            }
+
         });
     </script>
 </body>
