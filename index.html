@@ -274,7 +274,7 @@
             </div>
 
             <div class="chart">
-                <div class="net-profit-loss" id="netProfitLoss">Net Profit/Loss: 0</div>
+                <div class="net-profit-loss" id="netProfitLoss">P&L: 0</div>
                 <canvas id="myChart"></canvas>
             </div>
         </div>
@@ -449,7 +449,7 @@
                     for (let trade = 0; trade < tradePerDay; trade++) {
                         const randomOutcome = Math.random();
 
-                        if (randomOutcome < 0.5) {
+                        if (randomOutcome < 0.5) {  //50% chance for win / Loss
                             const winAmount = tradeAmount * riskReward;
                             dailyProfitLoss += winAmount;
                             dailyTrades.push(`Win`);
@@ -482,17 +482,19 @@
                 } else {
                     netProfitLossElement.style.color = 'white';
                 }
-                netProfitLossElement.textContent = `Net Profit/Loss: ${netProfitLoss}`;
+                netProfitLossElement.textContent = `P&L: ${netProfitLoss}`;
 
 
 
                 // Display the net profit/loss and percentages
                 const netProfitLossDiv = document.createElement("div");
                 const maxDrawdown = calculateMaxDrawdown(netProfitLossValues);
+                
                 resultsDiv.innerHTML = `
-                    Net Profit/Loss: ${netProfitLoss}<br>
-                    Maximum Drawdown: ${maxDrawdown}<br>
-                `;
+                    P&L: ${netProfitLoss}<br>
+                    Max Loss: ${maxDrawdown}`;
+                    
+                
                 resultsDiv.appendChild(netProfitLossDiv);
 
                 const profitLossPercentageDiv = document.createElement("div");
@@ -558,7 +560,7 @@
                         currentLoss = 0;
                     }
                 }
-
+              
                 return Math.abs(maxLoss); // Return the maximum loss as a positive value
             }
 
