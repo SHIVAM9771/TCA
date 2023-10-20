@@ -3,133 +3,81 @@
 
 <head>
     <title>Money Management and Position Sizing</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #393939;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-        }
-
-        #container {
-            max-width: 1380px;
-            max-height: 4140px;
-            height: 100%;
-            width: 100%;
-            margin: 20px;
-            background-color: #ea1e1e;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-            display: flex;
-            flex-direction: row;
-            justify-content: space-between;
-            border-radius: 10px;
-            overflow: hidden;
-        }
-
-        .left-section {
-            flex: 1;
-            padding: 20px;
-            background-color: #83aad6;
-            color: #ccfbfd;
-        }
-
-        .right-section {
-            flex: 2;
-            padding: 20px;
-            background-color: #d8f5ff;
-        }
-
-        h1 {
-            text-align: center;
-        }
-
-        label {
-            font-weight: bold;
-            color: #333;
-        }
-
-        input[type="number"] {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #a29f9f;
-            color: #9b9b9b;
-            border-radius: 4px;
-            box-sizing: border-box;
-            margin-bottom: 10px;
-        }
-
-        button {
-            background-color: #007bff;
-            color: #000000;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            margin-top: 10px;
-            
-        }
-
-        .reset-button {
-            background-color: #f44336; /* Change the background color to red */
-            color: #000000; /* Change the text color to white */
-        }
-
-        a {
-            text-decoration: none;
-        }
-    </style>
+    <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
-    <div id="container">
-        <div class="left-section">
+    <div class="dashboard-container">
+        <div class="dashboard-left">
             <h1>Position Sizing</h1>
+            <form id="position-sizing-form">
+                <div class="form-group">
+                    <label for="accountBalance">Account Balance ($):</label>
+                    <input type="number" id="accountBalance" placeholder="Enter your account balance" value="50000" required />
+                </div>
 
-            <label for="accountBalance">Account Balance ($):</label>
-            <input type="number" id="accountBalance" placeholder="Enter your account balance" value="50000" />
+                <div class="form-group">
+                    <label for="riskPercentage">Risk Amount Per Trade:</label>
+                    <input type="number" id="riskPercentage" placeholder="Enter your risk Amount" value="500" required />
+                </div>
 
-            <label for="riskPercentage">Risk Amount Per Trade:</label>
-            <input type="number" id="riskPercentage" placeholder="Enter your risk Amount" value="500" />
+                <div class="form-group">
+                    <label for="lotsize">Lot Size:</label>
+                    <input type="number" id="lotsize" placeholder="Enter lot size" value="15" required />
+                </div>
 
-            <label for="lotsize">Lot Size:</label>
-            <input type="number" id="lotsize" placeholder="Enter lot size" value="15" />
+                <div class="form-group">
+                    <label for="riskReward">Risk Reward Ratio:</label>
+                    <input type="number" id="riskReward" placeholder="Enter risk reward ratio" value="3.0" required />
+                </div>
 
-            <label for="riskReward">Risk Reward Ratio:</label>
-            <input type="number" id="riskReward" placeholder="Enter risk reward ratio" value="3.0" />
+                <div class="form-group">
+                    <label for="entryPrice">Entry Price:</label>
+                    <input type="number" id="entryPrice" placeholder="Enter entry price" value="100" required />
+                </div>
 
-            <label for="entryPrice">Entry Price:</label>
-            <input type="number" id="entryPrice" placeholder="Enter entry price" value="100" />
+                <div class="form-group">
+                    <label for="stopLoss">Stop Loss ($):</label>
+                    <input type="number" id="stopLoss" placeholder="Enter your stop loss" value="20" required />
+                </div>
 
-            <label for="stopLoss">Stop Loss ($):</label>
-            <input type="number" id="stopLoss" placeholder="Enter your stop loss" value="20" />
+                <button type="button" id="calculateButton">Calculate Position Size</button>
+                <button type="button" id="resetButton" class="reset-button">Reset</button>
+            </form>
         </div>
 
-        <div class="right-section">
-            <label for="positionSize">Position Size (In Lot):</label>
-            <input type="number" id="positionSize" disabled />
+        <div class="dashboard-right">
+            <div class="result-container">
+                <h2>Results</h2>
+                <div class="result">
+                    <label for="positionSize">Position Size (In Lot):</label>
+                    <input type="text" id="positionSize" disabled />
+                </div>
 
-            <label for="targetPrice">Target Price:</label>
-            <input type="number" id="targetPrice" disabled />
+                <div class="result">
+                    <label for="targetPrice">Target Price:</label>
+                    <input type="text" id="targetPrice" disabled />
+                </div>
 
-            <label for="stopLossPrice">Stop Loss Price:</label>
-            <input type="number" id="stopLossPrice" disabled />
+                <div class="result">
+                    <label for="stopLossPrice">Stop Loss Price:</label>
+                    <input type="text" id="stopLossPrice" disabled />
+                </div>
 
-            <label for="expectedProfit">Expected Profit:</label>
-            <input type="number" id="expectedProfit" disabled />
+                <div class="result">
+                    <label for="expectedProfit">Expected Profit:</label>
+                    <input type="text" id="expectedProfit" disabled />
+                </div>
 
-            <label for="expectedLoss">Expected Loss:</label>
-            <input type="number" id="expectedLoss" disabled />
+                <div class="result">
+                    <label for="expectedLoss">Expected Loss:</label>
+                    <input type="text" id="expectedLoss" disabled />
+                </div>
+            </div>
 
-            <button id="calculateButton">Calculate Position Size</button>
-            <button id="resetButton" class="reset-button">Reset</button> 
-            <a href="index.html"><button id="redirectBtn">Back</button></a>
+            <a href="index.html"><button type="button" id="redirectBtn">Back</button></a>
         </div>
     </div>
-
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             const accountBalanceInput = document.querySelector("#accountBalance");
