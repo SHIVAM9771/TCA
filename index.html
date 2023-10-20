@@ -2,46 +2,15 @@
 <html>
 
 <head>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="https://drive.google.com/uc?export=view&id=196OrlA-nQUcCBw5dQ90wqdDhv9nxSr2T" type="image/x-icon">
+
     <title>Trade Combinator Analyzer</title>
     <style>
-        .logo-container {
-            display: flex;
-            position: absolute;
-            top: 30px; /* Adjust the top value to your preference */
-            left: 20px;
-        }
-
-        .logo {
-            position: absolute;
-            top: 10px; /* Adjust the top value to your preference */
-            left: 20px;
-            width: 50px;
-            border-radius: 50%; /* Make the logo round */
-        }
-
-        .title-slogan {
-            margin-top: 0px;
-            margin-left: 80px; /* Adjust the spacing between logo and text */
-        }
-    
-        .title-slogan h1 {
-            margin: 0; /* Adjust the top and bottom margin of the title */
-            font-size: 24px; /* Change the font size for the title */
-            color: #c43535; /* Change the text color for the title */
-            font-weight: bold; /* Add font-weight to the title (e.g., bold) */
-        }
-    
-        .title-slogan p {
-            margin: 0px 0; /* Adjust the top and bottom margin of the slogan */
-            font-size: 16px; /* Change the font size for the slogan */
-            color: #96c7e5; /* Change the text color for the slogan */
-            font-weight: normal; /* Remove font-weight from the slogan (e.g., normal) */
-        }
-
         body {
             font-family: Arial, sans-serif;
-            background-color: #313131;
-            color: #cfcfcf;
+            background-color: #121212;
+            color: #ffffff;
             margin: 0;
             padding: 0;
             display: flex;
@@ -51,33 +20,77 @@
         }
 
         #container {
-            display: flex;
-            max-height: 1080px;
-            height: 100%;
-            width: 100%;
-            max-width: 1920px;
-            padding: 20px;
-            background-color: #1f1f1f;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-            flex-direction: column;
+            opacity: 1;
+            transform: translateY(0);
+            transition: opacity 1s ease, transform 1s ease;
         }
+        
 
         #heading {
             font-family: 'Arial Black', sans-serif;
             font-size: 32px;
-            text-align: center; /* Center the heading */
-            margin-bottom: 20px; /* Add some space below the heading */
+            text-align: center;
+            margin-bottom: 20px;
+            color: #007BFF;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .logo-circle {
+            background: linear-gradient(45deg, #007BFF, #FF8D30, #FF5733);
+            border-radius: 50%;
+            width: 70px;
+            height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 20px;
+        }
+
+        .logo-text {
+            font-family: 'Dancing Script', cursive;
+            font-size: 36px;
+            color: #007BFF;
+        }
+
+        .logo {
+            width: 50px;
+            border-radius: 50%;
+        }
+
+        .title-slogan {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .title-slogan h2 {
+            font-size: 24px;
+            color: #007BFF;
+            font-weight: bold;
+        }
+
+        .title-slogan h4 {
+            font-size: 16px;
+            color: #ff8d30;
+            font-weight: normal;
         }
 
         #content {
             display: flex;
-            width: 100%;
-            max-width: 100%;
+            flex-direction: row;
         }
 
         #user-input {
-            flex: 2;
+            flex: 1;
+            background-color: #333;
+            border: 1px solid #555;
+            border-radius: 10px;
             padding: 20px;
+            margin-right: 10px;
         }
 
         .input-group {
@@ -86,25 +99,28 @@
 
         .input-label {
             font-weight: bold;
+            color: #fff;
         }
 
         input[type="text"] {
-            width: 80%;
+            width: 100%;
             padding: 11px;
-            border: 1px solid #ccc;
-            border-radius: 20px;
+            border: 1px solid #555;
+            border-radius: 10px;
             box-sizing: border-box;
-            background-color: #b6b6b6; /* Change the background color */
-            color: #333; /
+            background-color: #444;
+            color: #fff;
         }
 
         .btn-group {
-            text-align: center; /* Center the buttons */
+            text-align: center;
+            margin-top: 10px;
         }
 
-        .btn {
+        .btn,
+        .btn.reset {
             background-color: #007BFF;
-            color: rgb(0, 0, 0);
+            color: white;
             padding: 10px 20px;
             border: none;
             border-radius: 10px;
@@ -113,75 +129,101 @@
         }
 
         .btn.reset {
-            background-color: #f44336;
+            background-color: #ff5733;
         }
 
         .chart {
-            flex: 4;
-            background-color: rgb(53, 53, 53);
-            color: #ffffff;
-            display: flex;
-            flex-direction: column;
-        }
-
-        #results {
-            flex: 0;
-            padding: 20px;
+            flex: 2;
+            position: relative;
         }
 
         #myChart {
-            flex: 1;
+            width: 100%;
         }
 
-        .dark-mode {
-            background-color: #1f1f1f;
-            color: white;
+        #results {
+            overflow: auto;
+            max-height: 400px;
+            background-color: #333;
+            border: 1px solid #555;
+            border-radius: 10px;
+            padding: 10px;
+            margin-top: 20px;
         }
 
-        @media (max-width: 768px) {
-            #container {
-                padding: 10px;
-            }
-
-            #user-input {
-                padding: 10px;
-            }
+        .header-menu {
+            background-color: #121212;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            direction: rtl;
         }
 
- @media (max-width: 768px) { 
-            .chart {
-                order: -1; /* Move the chart above other content */
-            }
+        .header-menu ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
 
-            .logo-container, .title-slogan {
-                text-align: center; /* Center align the logo and title for better mobile display */
-            }
+        .header-menu li {
+            display: inline;
+            margin-left: 20px;
+        }
 
-            #user-input, .btn-group {
-                flex-direction: column; /* Arrange input fields and buttons in a column */
-            }
+        .header-menu a {
+            text-decoration: none;
+            color: #3dd9b7;
+            font-weight: bold;
+            font-size: 16px;
+        }
 
-            input[type="text"] {
-                width: 100%; /* Full width for input fields */
-            }
+        .animated {
+            opacity: 1;
+            transform: translateY(0);
+        }
 
-            .btn {
-                width: 100%; /* Full width for buttons */
-            }
-        } 
+        .btn:hover {
+            transform: scale(1.05);
+            transition: transform 0.3s;
+        }
+
+        /* Add hover animations for sections */
+        .chart:hover {
+            transform: scale(1.02);
+            transition: transform 0.3s;
+        }
+
+        /* Add hover animations for the results section */
+        #results:hover {
+            transform: scale(1.02);
+            transition: transform 0.3s;
+        }
     </style>
 </head>
 
 <body>
-    <div class="logo-container">
-        <img class="logo" src="https://drive.google.com/uc?export=view&id=1O1TCrghjtD9HIaDJLlLmKBh7941Yn4Gz" alt="Logo">
-        <div class="title-slogan">
-            <h2>Stockify</h2>
-            <h4>Trade with confidence</h4>
-        </div>
-    </div>
-
     <div id="container">
+        <div class="logo-container">
+            <div class="logo-circle">
+                <img class="logo"
+                    src="https://drive.google.com/uc?export=view&id=1O1TCrghjtD9HIaDJLlLmKBh7941Yn4Gz"
+                    alt="Logo">
+            </div>
+            <div class="title-slogan">
+                <div class="logo-text">
+                    Stockify
+                </div>
+                <h4>Trade with confidence</h4>
+            </div>
+        </div>
+
+        <div class="header-menu">
+            <ul>
+                <li><a href="ps.html">Position-Calculator</a></li>
+            </ul>
+        </div>
+
         <div id="heading">Trade Combinator Analyzer</div>
 
         <div id="content">
@@ -202,7 +244,7 @@
                 </div>
 
                 <div class="input-group">
-                    <label class="input-label" for="tradeAmount">Trade amount:</label>
+                    <label class="input-label" for="tradeAmount">Loss per Trade:</label>
                     <input type="text" id="tradeAmount" value="500" />
                 </div>
 
@@ -215,7 +257,6 @@
                     <button class="btn" id="calculateBtn">Calculate</button>
                     <button class="btn reset" id="resetBtn">Reset</button><br><br>
                     <button class="btn" id="generateBtn">Generate</button>
-                    <a href="ps.html"><button class="btn" id="redirectBtn">P-size</button></a>
                 </div>
             </div>
 
@@ -227,10 +268,13 @@
         <div id="results">
             <!-- Results will be displayed here -->
         </div>
-           </div>
+    </div>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-zoom/0.7.7/chartjs-plugin-zoom.min.js"></script>
+
     <script>
         document.addEventListener("DOMContentLoaded", function () {
+            const container = document.querySelector("#container");
             const calculateButton = document.querySelector("#calculateBtn");
             const generateButton = document.querySelector("#generateBtn");
             const resetButton = document.querySelector("#resetBtn");
@@ -246,23 +290,47 @@
                     {
                         label: 'Net Profit/Loss',
                         data: [],
-                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        fill: true,
                         borderColor: 'rgba(75, 192, 192, 1)',
-                        borderWidth: 1,
+                        tension: 0.4,
+                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
                     },
                 ],
             };
 
             const chartOptions = {
-                responsive: true,
+                plugins: {
+                    zoom: {
+                        zoom: {
+                            wheel: {
+                                enabled: true,
+                            },
+                            pinch: {
+                                enabled: true,
+                            },
+                            drag: {
+                                enabled: true,
+                            },
+                            mode: 'xy',
+                        },
+                    },
+                    fillAboveBelow: {
+                        above: 'rgba(75, 192, 192, 0.2)',
+                        below: 'rgba(255, 0, 0, 0.2)',
+                    },
+                },
                 scales: {
                     x: {
+                        type: 'linear',
+                        position: 'bottom',
                         title: {
                             display: true,
-                            text: 'Number of Days',
+                            text: 'Days',
                         },
                     },
                     y: {
+                        type: 'linear',
+                        position: 'left',
                         title: {
                             display: true,
                             text: 'Net Profit/Loss',
@@ -277,6 +345,9 @@
                 options: chartOptions,
             });
 
+            // Add animations when the page loads
+            container.classList.add("animated");
+
             calculateButton.addEventListener("click", function () {
                 // Get input values
                 const tradePerDay = parseInt(document.querySelector("#tradePerDay").value);
@@ -284,15 +355,11 @@
                 const riskReward = parseFloat(document.querySelector("#riskReward").value);
                 const tradeAmount = parseFloat(document.querySelector("#tradeAmount").value);
 
-                // Calculate the number of combinations
+                let profitCount = 0;
+                let lossCount = 0;
+                let breakEvenCount = 0;
                 const totalCombinations = Math.pow(2, tradePerDay * numDays);
 
-                // Initialize counters for loss and profit
-                let lossCount = 0;
-                let profitCount = 0;
-                let breakEvenCount = 0;
-
-                // Helper function to calculate combinations recursively
                 function calculateCombinations(remainingTrades, currentProfitLoss) {
                     if (remainingTrades === 0) {
                         if (currentProfitLoss > 0) {
@@ -305,136 +372,136 @@
                         return;
                     }
 
-                    // Simulate a win
                     calculateCombinations(remainingTrades - 1, currentProfitLoss + tradeAmount * riskReward);
-
-                    // Simulate a loss
                     calculateCombinations(remainingTrades - 1, currentProfitLoss - tradeAmount);
                 }
 
-                // Calculate combinations
                 calculateCombinations(tradePerDay * numDays, 0);
 
-                // Calculate percentages
                 const profitPercentage = (profitCount / totalCombinations * 100).toFixed(2);
                 const lossPercentage = (lossCount / totalCombinations * 100).toFixed(2);
                 const breakEvenPercentage = (breakEvenCount / totalCombinations * 100).toFixed(2);
 
-                // Display the results
                 resultsDiv.innerHTML = `
-                Total Combinations: ${totalCombinations}<br>
-                Combinations in Profit: ${profitCount} (${profitPercentage}%)<br>
-                Combinations in Loss: ${lossCount} (${lossPercentage}%)<br>
-                Break-Even Combinations: ${breakEvenCount} (${breakEvenPercentage}%)`;
+                    Total Combinations: ${totalCombinations}<br>
+                    Combinations in Profit: ${profitCount} (${profitPercentage}%)<br>
+                    Combinations in Loss: ${lossCount} (${lossPercentage}%)<br>
+                    Break-Even Combinations: ${breakEvenCount} (${breakEvenPercentage}%)`;
+
+                // Add animations for results
+                resultsDiv.style.opacity = 0;
+                resultsDiv.style.transform = "translateY(20px)";
+                setTimeout(() => {
+                    resultsDiv.style.opacity = 1;
+                    resultsDiv.style.transform = "translateY(0)";
+                }, 300);
             });
 
             generateButton.addEventListener("click", function () {
-    // Clear the existing generated trades
-    generatedTrades = [];
-
-    // Get input values
-    const tradePerDay = parseInt(document.querySelector("#tradePerDay").value);
-    const ndtpc = parseInt(document.querySelector("#ndtpc").value);
-    const tradeAmount = parseFloat(document.querySelector("#tradeAmount").value);
-    const riskReward = parseFloat(document.querySelector("#riskReward").value);
-
-    // Clear the resultsDiv content before updating
-    resultsDiv.innerHTML = '';
-
-    // Generate random trades and calculate net profit/loss
-    let netProfitLoss = 0;
-    let netProfitLossPerDay = [];
-    let allTrades = [];
-
-    let daysInProfit = 0;
-    let daysInLoss = 0;
-    let daysInBreakEven = 0;
-
-    for (let day = 0; day < ndtpc; day++) {
-        let dailyProfitLoss = 0;
-        const dailyTrades = []; // Array to store trades for the day
-
-        for (let trade = 0; trade < tradePerDay; trade++) {
-            const randomOutcome = Math.random(); // Random value between 0 and 1
-
-            if (randomOutcome < 0.5) {
-                // 40% chance of win or loss
-                const winAmount = tradeAmount * riskReward;
-                dailyProfitLoss += winAmount;
-                dailyTrades.push(`Win`);
-            } else {
-                const lossAmount = tradeAmount;
-                dailyProfitLoss -= lossAmount;
-                dailyTrades.push(`Loss`);
-            }
-        }
-
-        netProfitLoss += dailyProfitLoss;
-        netProfitLossPerDay.push(netProfitLoss);
-
-        allTrades.push(`${day + 1}: ${dailyTrades.join(", ")}`);
-
-        if (dailyProfitLoss > 0) {
-            daysInProfit++;
-        } else if (dailyProfitLoss < 0) {
-            daysInLoss++;
-        } else {
-            daysInBreakEven++;
-        }
-    }
-
-    // Calculate the percentages
-    const percentageProfit = (daysInProfit / ndtpc) * 100;
-    const percentageLoss = (daysInLoss / ndtpc) * 100;
-    const percentageBreakEven = (daysInBreakEven / ndtpc) * 100;
-
-    // Display the net profit/loss, percentage of profit, percentage of loss, and percentage of break-even
-    const netProfitLossDiv = document.createElement("div");
-    netProfitLossDiv.innerHTML = `<p>Net Profit/Loss: ${netProfitLoss}</p>`;
-    resultsDiv.appendChild(netProfitLossDiv);
-
-    const profitLossPercentageDiv = document.createElement("div");
-    profitLossPercentageDiv.innerHTML = `
-        <p>Days in Profit: ${percentageProfit.toFixed(2)}%</p>
-        <p>Days in Loss: ${percentageLoss.toFixed(2)}%</p>
-        <p>Days in Break-Even: ${percentageBreakEven.toFixed(2)}%</p>
-    `;
-    resultsDiv.appendChild(profitLossPercentageDiv);
-
-    // Display all randomly generated trades
-    const allTradesDiv = document.createElement("div");
-    allTradesDiv.innerHTML = `<p>All Randomly Generated Trades:</p>`;
-    resultsDiv.appendChild(allTradesDiv);
-
-    const tradesList = document.createElement("ul");
-    allTrades.forEach((trade) => {
-        const listItem = document.createElement("li");
-        listItem.textContent = trade;
-        tradesList.appendChild(listItem);
-    });
-    resultsDiv.appendChild(tradesList);
-
-    // Update the chart data (assuming you have already set up the chart)
-    chartData.labels = Array.from({ length: ndtpc }, (_, i) => `Day ${i + 1}`);
-    chartData.datasets[0].data = netProfitLossPerDay;
-    myChart.update();
-});
-
+                // Clear the existing generated trades
+                generatedTrades = [];
+            
+                // Get input values
+                const tradePerDay = parseInt(document.querySelector("#tradePerDay").value);
+                const ndtpc = parseInt(document.querySelector("#ndtpc").value);
+                const tradeAmount = parseFloat(document.querySelector("#tradeAmount").value);
+                const riskReward = parseFloat(document.querySelector("#riskReward").value);
+            
+                // Clear the resultsDiv content before updating
+                resultsDiv.innerHTML = '';
+            
+                // Generate random trades and calculate net profit/loss
+                let netProfitLoss = 0;
+                let netProfitLossPerDay = [];
+                let daysInProfit = 0;
+                let daysInLoss = 0;
+                let daysInBreakEven = 0;
+            
+                for (let day = 0; day < ndtpc; day++) {
+                    let dailyProfitLoss = 0;
+                    const dailyTrades = [];
+            
+                    for (let trade = 0; trade < tradePerDay; trade++) {
+                        const randomOutcome = Math.random();
+            
+                        if (randomOutcome < 0.5) {
+                            const winAmount = tradeAmount * riskReward;
+                            dailyProfitLoss += winAmount;
+                            dailyTrades.push(`Win`);
+                        } else {
+                            const lossAmount = tradeAmount;
+                            dailyProfitLoss -= lossAmount;
+                            dailyTrades.push(`Loss`);
+                        }
+                    }
+            
+                    netProfitLoss += dailyProfitLoss;
+                    netProfitLossPerDay.push(netProfitLoss);
+            
+                    if (dailyProfitLoss > 0) {
+                        daysInProfit++;
+                    } else if (dailyProfitLoss < 0) {
+                        daysInLoss++;
+                    } else {
+                        daysInBreakEven++;
+                    }
+            
+                    generatedTrades.push(dailyTrades);
+                }
+            
+                // Display the net profit/loss and percentages
+                const netProfitLossDiv = document.createElement("div");
+                netProfitLossDiv.innerHTML = `<p>Net Profit/Loss: ${netProfitLoss}</p>`;
+                resultsDiv.appendChild(netProfitLossDiv);
+            
+                const profitLossPercentageDiv = document.createElement("div");
+                profitLossPercentageDiv.innerHTML = `
+                    <p>Days in Profit: ${daysInProfit} (${((daysInProfit / ndtpc) * 100).toFixed(2)}%)</p>
+                    <p>Days in Loss: ${daysInLoss} (${((daysInLoss / ndtpc) * 100).toFixed(2)}%)</p>
+                    <p>Days in Break-Even: ${daysInBreakEven} (${((daysInBreakEven / ndtpc) * 100).toFixed(2)}%)</p>
+                `;
+                resultsDiv.appendChild(profitLossPercentageDiv);
+            
+                // Display the generated trades
+                for (let day = 0; day < ndtpc; day++) {
+                    const dayTradeList = document.createElement('ul');
+                    dayTradeList.innerHTML = `${day + 1}: ${generatedTrades[day].join(', ')}`;
+                    resultsDiv.appendChild(dayTradeList);
+            
+                    // Add animations for generated trades
+                    dayTradeList.style.opacity = 0;
+                    dayTradeList.style.transform = "translateY(20px)";
+                    setTimeout(() => {
+                        dayTradeList.style.opacity = 1;
+                        dayTradeList.style.transform = "translateY(0)";
+                    }, 25 * (day + 1));
+                }
+            
+                chartData.labels = Array.from({ length: ndtpc }, (_, i) => i + 1);
+                chartData.datasets[0].data = netProfitLossPerDay;
+                myChart.update();
+            });
+            
+            
 
             resetButton.addEventListener("click", function () {
-                // Clear all input fields
                 document.querySelector("#tradePerDay").value = '';
                 document.querySelector("#ndtpc").value = '';
                 document.querySelector("#riskReward").value = '';
                 document.querySelector("#tradeAmount").value = '';
 
-                // Clear the results
                 resultsDiv.innerHTML = '';
 
-                // Clear the chart data and update the chart
                 chartData.labels = [];
                 chartData.datasets[0].data = [];
                 myChart.update();
+
+                resultsDiv.style.opacity = 0;
+                resultsDiv.style.transform = "translateY(20px)";
+                setTimeout(() => {
+                    resultsDiv.style.opacity = 1;
+                    resultsDiv.style.transform = "translateY(0)";
+                }, 300);
             });
         });
     </script>
