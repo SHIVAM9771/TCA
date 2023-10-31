@@ -38,6 +38,17 @@
             color: #007BFF;
         }
 
+        #maxLoss {
+            position: absolute;
+            top: 10px;
+            left: 130px; /* Adjust the left position based on your design */
+            background-color: rgba(0, 0, 0, 0); /* Red background color with transparency */
+            color: #f90000;
+            border-radius: 5px;
+            padding: 5px;
+            font-size: 14px;
+        }
+
         .logo-container {
             display: flex;
             align-items: center;
@@ -343,6 +354,7 @@
             </div>
 
             <div class="chart">
+                <div class="net-profit-loss" id="maxLoss">Max Loss: 0</div>
                 <div class="net-profit-loss" id="netProfitLoss">P&L: 0</div>
                 <canvas id="myChart"></canvas>
             </div>
@@ -506,7 +518,7 @@
                 // Clear the existing generated trades and net profit/loss values
                 generatedTrades = [];
                 netProfitLossValues = [];
-
+            
                 // Get input values from the user
                 const tradePerDay = parseInt(document.querySelector("#tradePerDay").value);
                 const ndtpc = parseInt(document.querySelector("#ndtpc").value);
@@ -514,23 +526,23 @@
                 const riskReward = parseFloat(document.querySelector("#riskReward").value);
                 const chancePercent = parseFloat(document.querySelector("#chancePercent").value);
                 const chargesPerTrade = parseFloat(document.querySelector("#chargesPerTrade").value);
-
+            
                 // Clear the resultsDiv content before updating
                 resultsDiv.innerHTML = '';
-
+            
                 // Generate random trades and calculate net profit/loss
                 let netProfitLoss = 0;
                 let daysInProfit = 0;
                 let daysInLoss = 0;
                 let daysInBreakEven = 0;
-
+            
                 for (let day = 0; day < ndtpc; day++) {
                     let dailyProfitLoss = 0;
                     const dailyTrades = [];
-
+            
                     for (let trade = 0; trade < tradePerDay; trade++) {
                         const randomOutcome = Math.random() * 100; // Generate a random number between 0 and 100
-
+            
                         if (randomOutcome < chancePercent) {  // Check if it's a win based on chance percent
                             const winAmount = tradeAmount * riskReward;
                             dailyProfitLoss += winAmount;
@@ -541,13 +553,13 @@
                             dailyTrades.push(`Loss`);
                         }
                     }
-
+            
                     // Deduct charges per trade from daily profit/loss
                     dailyProfitLoss -= chargesPerTrade * tradePerDay;
-
+            
                     netProfitLoss += dailyProfitLoss;
                     netProfitLossValues.push(netProfitLoss);
-
+            
                     if (dailyProfitLoss > 0) {
                         daysInProfit++;
                     } else if (dailyProfitLoss < 0) {
@@ -555,11 +567,12 @@
                     } else {
                         daysInBreakEven++;
                     }
-
+            
                     generatedTrades.push(dailyTrades);
                 }
-
+            
                 // Display the net profit/loss with appropriate colors
+                const netProfitLossElement = document.getElementById("netProfitLoss");
                 if (netProfitLoss > 0) {
                     netProfitLossElement.style.color = 'green';
                 } else if (netProfitLoss < 0) {
@@ -568,15 +581,15 @@
                     netProfitLossElement.style.color = 'white';
                 }
                 netProfitLossElement.textContent = `P&L: ${netProfitLoss}`;
-
+            
                 // Display net profit/loss and percentages
                 const netProfitLossDiv = document.createElement("div");
-                const maxDrawdown = calculateMaxDrawdown(netProfitLossValues);
+                const calculatedMaxDrawdown = calculateMaxDrawdown(netProfitLossValues);
                 resultsDiv.innerHTML = `
                     P&L: ${netProfitLoss}<br>
-                    Max Drawdown: ${maxDrawdown}`;
+                    Max Drawdown: ${calculatedMaxDrawdown}`;
                 resultsDiv.appendChild(netProfitLossDiv);
-
+            
                 const profitLossPercentageDiv = document.createElement("div");
                 profitLossPercentageDiv.innerHTML = `
                     Days in Profit: ${daysInProfit} (${((daysInProfit / ndtpc) * 100).toFixed(2)}%)<br>
@@ -584,13 +597,13 @@
                     Days in Break-Even: ${daysInBreakEven} (${((daysInBreakEven / ndtpc) * 100).toFixed(2)}%)<br>
                 `;
                 resultsDiv.appendChild(profitLossPercentageDiv);
-
+            
                 // Display the generated trades
                 for (let day = 0; day < ndtpc; day++) {
                     const dayTradeList = document.createElement('ul');
                     dayTradeList.innerHTML = `${day + 1}: ${generatedTrades[day].join(', ')}`;
                     resultsDiv.appendChild(dayTradeList);
-
+            
                     // Add animations for generated trades
                     dayTradeList.style.opacity = 0;
                     dayTradeList.style.transform = "translateY(20px)";
@@ -599,13 +612,15 @@
                         dayTradeList.style.transform = "translateY(0)";
                     }, 25 * (day + 1));
                 }
-
+            
                 // Update the chart data and redraw the chart
                 chartData.labels = Array.from({ length: ndtpc }, (_, i) => i + 1);
                 chartData.datasets[0].data = netProfitLossValues;
                 myChart.update();
+            
+                // Calculate max drawdown
+                document.getElementById("maxLoss").textContent = `Max Loss: ${calculatedMaxDrawdown}`;
             });
-
             // Event listener for the "Reset" button
             resetButton.addEventListener("click", function () {
                 // Reset input values and clear the results and chart
