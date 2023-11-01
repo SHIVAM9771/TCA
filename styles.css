@@ -1,31 +1,37 @@
 /* styles.css */
 
-/* Define CSS variables for reusable values */
 :root {
-  --primary-bg: #1c1c1c;
+  --primary-bg: #1c1c1c8f;
   --primary-text: #fff;
   --primary-font: 'Montserrat', sans-serif;
-  --secondary-bg: #333;
-  --box-shadow-color: rgba(0, 0, 0, 0.4);
+  --secondary-bg: #33333391;
+  --box-shadow-color: rgba(0, 0, 0, 0.2);
   --border-radius: 15px;
   --transition-duration: 0.3s;
   --primary-hover-bg: #2c3e50;
   --secondary-hover-bg: #222;
   --accent-color: #65c0a7;
   --button-hover-bg: #4faa93;
+  --form-input-padding: 12px;
 }
 
 body {
-  background-color: var(--primary-bg);
-  color: var(--primary-text);
-  font-family: var(--primary-font);
   margin: 0;
-  padding: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  transition: background-color var(--transition-duration) ease;
+  overflow: auto;
+}
+
+#particles-js {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  background-color: #000000;
+}
+
+.container {
+  padding: 10px;
 }
 
 .dashboard-container {
@@ -33,42 +39,41 @@ body {
   box-shadow: 0 0 20px var(--box-shadow-color);
   border-radius: var(--border-radius);
   overflow: hidden;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 20px;
-  transition: background-color var(--transition-duration) ease, color var(--transition-duration) ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0px;
+  padding: 30px;
+  transition: background-color var(--transition-duration) ease, transform var(--transition-duration) ease;
 }
 
 .dashboard-container:hover {
   background-color: var(--primary-hover-bg);
+  transform: translateY(-5px);
 }
 
-.dashboard-left, .dashboard-right {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 30px;
-  transition: background-color var(--transition-duration) ease, color var(--transition-duration) ease;
+.dashboard-left,
+.dashboard-right {
+  flex: 0 1 50%;
+  width: 100%;
+  padding: 20px;
+  border-radius: var(--border-radius);
+  background-color: var(--primary-bg);
+  color: var(--primary-text);
+  transition: background-color var(--transition-duration) ease;
 }
 
 .dashboard-left {
-  background-color: #252525;
-  color: #ecf0f1;
+  margin-bottom: 20px;
 }
 
-.dashboard-right {
-  background-color: #303030;
-  color: #ecf0f1;
-}
-
-.dashboard-left:hover, .dashboard-right:hover {
+.dashboard-container:hover .dashboard-left,
+.dashboard-container:hover .dashboard-right {
   background-color: var(--secondary-hover-bg);
 }
 
 h1, h2 {
   font-size: 28px;
-  font-family: var(--primary-font);
   font-weight: 700;
   font-style: italic;
   margin-bottom: 20px;
@@ -86,19 +91,18 @@ label {
 }
 
 input[type="number"] {
-  width: 100%;
-  padding: 12px;
-  border: 1px solid #555;
-  background-color: #3c3c3c;
+  width: calc(100% - 2 * var(--form-input-padding));
+  padding: var(--form-input-padding);
+  border: 1px solid #5555556f;
+  background-color: #3c3c3c86;
   color: #ecf0f1;
-  font-family: var(--primary-font);
   font-weight: 400;
   border-radius: 5px;
   transition: background-color var(--transition-duration) ease;
 }
 
 input[type="number"]:focus {
-  background-color: #555;
+  background-color: #5555557f;
 }
 
 button {
@@ -107,18 +111,19 @@ button {
   color: #fff;
   border: none;
   cursor: pointer;
-  font-family: var(--primary-font);
   font-weight: 600;
   border-radius: 5px;
-  transition: background-color var(--transition-duration) ease, color var(--transition-duration) ease, box-shadow var(--transition-duration) ease;
+  transition: background-color var(--transition-duration) ease, transform var(--transition-duration) ease;
 }
 
 button.reset-button {
   background-color: #e74c3c;
 }
 
-button:hover, button.reset-button:hover {
+button:hover,
+button.reset-button:hover {
   background-color: var(--button-hover-bg);
+  transform: scale(1.05);
 }
 
 .result-container {
@@ -132,7 +137,6 @@ button:hover, button.reset-button:hover {
 a {
   text-decoration: none;
   color: var(--accent-color);
-  font-family: var(--primary-font);
   font-weight: 600;
   position: relative;
   padding-bottom: 2px;
@@ -155,6 +159,3 @@ a:hover {
 #redirectBtn:hover {
   background-color: #3e8b7a;
 }
-
-/* Stylish Font from Google Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
