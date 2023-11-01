@@ -310,6 +310,30 @@
                 font-size: 12px;
             }
         }
+
+        .tooltip {
+            visibility: hidden;
+            width: 120px;
+            background-color: #5c5c5c;
+            color: #ffffff;
+            text-align: center;
+            border-radius: 5px;
+            padding: 5px 0;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            margin-left: -60px;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        
+        .tooltip.show {
+            visibility: visible;
+            opacity: 1;
+        }
+        
+        
     </style>
 </head>
 
@@ -379,8 +403,13 @@
                     <label class="input-label" for="ndtpc">Number of Days to Plot Chart:</label>
                     <input type="number" id="ndtpc" placeholder="Enter total days" value="20" required />
                 </div>
-                <div class="btn-group"><button class="btn" id="generateBtn">Generate</button></div>
+                <div class="btn-group">
+                    <button class="btn" id="generateBtn">Generate</button>
+                    <span class="tooltip" id="tooltipMessage">Click multiple times to get random outcomes!</span>
+                </div>
+                
             </div>
+          
 
             <div class="chart">
                 <div class="net-profit-loss" id="maxLoss">Max Loss: 0</div>
@@ -417,6 +446,7 @@
 
         document.addEventListener("DOMContentLoaded", function () {
             // Select various elements on the page using their IDs
+            const tooltipMessage = document.getElementById("tooltipMessage");
             const container = document.getElementById("container");
             const calculateButton = document.getElementById("calculateBtn");
             const generateButton = document.getElementById("generateBtn");
@@ -668,6 +698,18 @@
 
                 // Calculate max drawdown
                 document.getElementById("maxLoss").textContent = `Max Loss: ${calculatedMaxDrawdown}`;
+            });
+
+            // Event listener for mouseover event on the "Generate" button
+            generateButton.addEventListener("mouseover", function () {
+                // Show the tooltip message when hovering over the button
+                tooltipMessage.classList.add("show");
+            });
+        
+            // Event listener for mouseout event on the "Generate" button
+            generateButton.addEventListener("mouseout", function () {
+                // Hide the tooltip message when the mouse is not hovering over the button
+                tooltipMessage.classList.remove("show");
             });
             // Event listener for the "Reset" button
             resetButton.addEventListener("click", function () {
