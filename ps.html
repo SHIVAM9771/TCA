@@ -2,88 +2,216 @@
 <html>
 
 <head>
-    <meta name="google-adsense-account" content="ca-pub-7746606719744521">
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7746606719744521"
-     crossorigin="anonymous"></script>
-    <link rel="icon" href="https://drive.google.com/uc?export=view&id=196OrlA-nQUcCBw5dQ90wqdDhv9nxSr2T" type="image/x-icon">
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="https://drive.google.com/uc?export=view&id=196OrlA-nQUcCBw5dQ90wqdDhv9nxSr2T"
+        type="image/x-icon">
     <title>Money Management and Position Sizing</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
-    <div class="dashboard-container">
-        <div class="dashboard-left">
-            <h1>Position Sizing</h1>
-            <form id="position-sizing-form">
-                <div class="form-group">
-                    <label for="accountBalance">Account Balance ($):</label>
-                    <input type="number" id="accountBalance" placeholder="Enter your account balance" value="50000" required />
-                </div>
+    <div id="particles-js"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 col-md-12">
+                <div class="dashboard-container">
+                    <div class="dashboard-left">
+                        <h1>Position Sizing</h1>
+                        <form id="position-sizing-form">
+                            <div class="form-group">
+                                <label for="accountBalance">Account Balance ($):</label>
+                                <input type="number" id="accountBalance" placeholder="Enter your account balance" value="50000"
+                                    required />
+                            </div>
 
-                <div class="form-group">
-                    <label for="riskPercentage">Risk Amount Per Trade:</label>
-                    <input type="number" id="riskPercentage" placeholder="Enter your risk Amount" value="500" required />
-                </div>
+                            <div class="form-group">
+                                <label for="riskPercentage">Risk Amount Per Trade:</label>
+                                <input type="number" id="riskPercentage" placeholder="Enter your risk Amount" value="500"
+                                    required />
+                            </div>
 
-                <div class="form-group">
-                    <label for="lotsize">Lot Size:</label>
-                    <input type="number" id="lotsize" placeholder="Enter lot size" value="15" required />
-                </div>
+                            <div class="form-group">
+                                <label for="lotsize">Lot Size:</label>
+                                <input type="number" id="lotsize" placeholder="Enter lot size" value="15" required />
+                            </div>
 
-                <div class="form-group">
-                    <label for="riskReward">Risk Reward Ratio:</label>
-                    <input type="number" id="riskReward" placeholder="Enter risk reward ratio" value="3.0" required />
-                </div>
+                            <div class="form-group">
+                                <label for="riskReward">Risk Reward Ratio:</label>
+                                <input type="number" id="riskReward" placeholder="Enter risk reward ratio" value="3.0"
+                                    required />
+                            </div>
 
-                <div class="form-group">
-                    <label for="entryPrice">Entry Price:</label>
-                    <input type="number" id="entryPrice" placeholder="Enter entry price" value="100" required />
-                </div>
+                            <div class="form-group">
+                                <label for="entryPrice">Entry Price:</label>
+                                <input type="number" id="entryPrice" placeholder="Enter entry price" value="100" required />
+                            </div>
 
-                <div class="form-group">
-                    <label for="stopLoss">Stop Loss ($):</label>
-                    <input type="number" id="stopLoss" placeholder="Enter your stop loss" value="20" required />
-                </div>
+                            <div class="form-group">
+                                <label for="stopLoss">Stop Loss ($):</label>
+                                <input type="number" id="stopLoss" placeholder="Enter your stop loss" value="20" required />
+                            </div>
 
-                <button type="button" id="calculateButton">Calculate Position Size</button>
-                <button type="button" id="resetButton" class="reset-button">Reset</button>
-            </form>
-        </div>
-
-        <div class="dashboard-right">
-            <div class="result-container">
-                <h2>Results</h2>
-                <div class="result">
-                    <label for="positionSize">Position Size (In Lot):</label>
-                    <input type="text" id="positionSize" disabled />
-                </div>
-
-                <div class="result">
-                    <label for="targetPrice">Target Price:</label>
-                    <input type="text" id="targetPrice" disabled />
-                </div>
-
-                <div class="result">
-                    <label for="stopLossPrice">Stop Loss Price:</label>
-                    <input type="text" id="stopLossPrice" disabled />
-                </div>
-
-                <div class="result">
-                    <label for="expectedProfit">Expected Profit:</label>
-                    <input type="text" id="expectedProfit" disabled />
-                </div>
-
-                <div class="result">
-                    <label for="expectedLoss">Expected Loss:</label>
-                    <input type="text" id="expectedLoss" disabled />
+                            <button type="button" id="calculateButton" class="btn btn-primary">Calculate Position Size</button>
+                            <button type="button" id="resetButton" class="btn btn-danger reset-button">Reset</button>
+                        </form>
+                    </div>
                 </div>
             </div>
+            <div class="col-lg-6 col-md-12">
+                <div class="dashboard-container">
+                    <div class="dashboard-right">
+                        <div class="result-container">
+                            <h2>Results</h2>
+                            <div class="result">
+                                <label for="positionSize">Position Size (In Lot):</label>
+                                <input type="text" id="positionSize" disabled />
+                            </div>
 
-            <a href="index.html"><button type="button" id="redirectBtn">Back</button></a>
+                            <div class="result">
+                                <label for="targetPrice">Target Price:</label>
+                                <input type="text" id="targetPrice" disabled />
+                            </div>
+
+                            <div class="result">
+                                <label for="stopLossPrice">Stop Loss Price:</label>
+                                <input type="text" id="stopLossPrice" disabled />
+                            </div>
+
+                            <div class="result">
+                                <label for="expectedProfit">Expected Profit:</label>
+                                <input type="text" id="expectedProfit" disabled />
+                            </div>
+
+                            <div class="result">
+                                <label for="expectedLoss">Expected Loss:</label>
+                                <input type="text" id="expectedLoss" disabled />
+                            </div>
+                        </div>
+
+                        <a href="index.html"><button type="button" id="redirectBtn" class="btn btn-success">Back</button></a>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+   
+</body>
+
+</html>
+
     <script>
+        particlesJS('particles-js', {
+            particles: {
+                number: {
+                    value: 250, // Number of particles
+                    density: {
+                        enable: true,
+                        value_area: 1100 // Adjust the area for density of particles
+                    }
+                },
+                color: {
+                    value: '#ffffff' // Color of particles
+                },
+                shape: {
+                    type: 'star', // Shape of particles (circle, edge, triangle, polygon, star, image, etc.)
+                    stroke: {
+                        width: 0,
+                        color: '#000000'
+                    },
+                    polygon: {
+                        nb_sides: 5
+                    }
+                },
+                opacity: {
+                    value: 0.5, // Opacity of particles
+                    random: false,
+                    anim: {
+                        enable: false,
+                        speed: 1,
+                        opacity_min: 0.1,
+                        sync: false
+                    }
+                },
+                size: {
+                    value: 3, // Size of particles
+                    random: true,
+                    anim: {
+                        enable: false,
+                        speed: 40,
+                        size_min: 0.1,
+                        sync: false
+                    }
+                },
+                line_linked: {
+                    enable: true,
+                    distance: 150, // Distance between connected particles
+                    color: '#ffffff',
+                    opacity: 0.4,
+                    width: 1
+                },
+                move: {
+                    enable: true,
+                    speed: 6, // Speed of particles' movement
+                    direction: 'none',
+                    random: false,
+                    straight: false,
+                    out_mode: 'out',
+                    bounce: false,
+                    attract: {
+                        enable: false,
+                        rotateX: 600,
+                        rotateY: 1200
+                    }
+                }
+            },
+            interactivity: {
+                detect_on: 'canvas',
+                events: {
+                    onhover: {
+                        enable: true,
+                        mode: 'repulse'
+                    },
+                    onclick: {
+                        enable: true,
+                        mode: 'push'
+                    },
+                    resize: true
+                },
+                modes: {
+                    grab: {
+                        distance: 400,
+                        line_linked: {
+                            opacity: 1
+                        }
+                    },
+                    bubble: {
+                        distance: 400,
+                        size: 40,
+                        duration: 2,
+                        opacity: 8,
+                        speed: 3
+                    },
+                    repulse: {
+                        distance: 200,
+                        duration: 0.4
+                    },
+                    push: {
+                        particles_nb: 4
+                    },
+                    remove: {
+                        particles_nb: 2
+                    }
+                }
+            },
+            retina_detect: true
+        });
+
         document.addEventListener("DOMContentLoaded", function () {
             const accountBalanceInput = document.querySelector("#accountBalance");
             const riskPercentageInput = document.querySelector("#riskPercentage");
@@ -116,12 +244,13 @@
                 ) {
                     const positionSize = riskPercentage / stopLoss / lotsize;
                     positionSizeInput.value = positionSize.toFixed(0);
+                    positionSizeInput.classList.add("highlighted")
                     const targetPrice = entryPrice + stopLoss * riskReward;
                     const stopLossPrice = entryPrice - stopLoss;
                     const expectedProfit =
-                    positionSize.toFixed(0) * lotsize * (targetPrice - entryPrice);
+                        positionSize.toFixed(0) * lotsize * (targetPrice - entryPrice);
                     const expectedLoss =
-                    positionSize.toFixed(0) * lotsize * (entryPrice - stopLossPrice);
+                        positionSize.toFixed(0) * lotsize * (entryPrice - stopLossPrice);
 
                     targetPriceInput.value = targetPrice.toFixed(2);
                     stopLossPriceInput.value = stopLossPrice.toFixed(2);
@@ -130,22 +259,23 @@
                 } else {
                     alert("Please enter valid numbers for all inputs.");
                 }
-                const resetButton = document.querySelector("#resetButton");
+            });
 
-                resetButton.addEventListener("click", function () {
-                    // Clear all input fields
-                    accountBalanceInput.value = "";
-                    riskPercentageInput.value = "";
-                    stopLossInput.value = "";
-                    lotsizeInput.value = "";
-                    riskRewardInput.value = "";
-                    entryPriceInput.value = "";
-                    targetPriceInput.value = "";
-                    stopLossPriceInput.value = "";
-                    expectedProfitInput.value = "";
-                    expectedLossInput.value = "";
-                    positionSizeInput.value = "";
-                });
+            const resetButton = document.querySelector("#resetButton");
+            resetButton.addEventListener("click", function () {
+                // Clear all input fields
+                accountBalanceInput.value = "";
+                riskPercentageInput.value = "";
+                stopLossInput.value = "";
+                lotsizeInput.value = "";
+                riskRewardInput.value = "";
+                entryPriceInput.value = "";
+                targetPriceInput.value = "";
+                stopLossPriceInput.value = "";
+                expectedProfitInput.value = "";
+                expectedLossInput.value = "";
+                positionSizeInput.value = "";
+                positionSizeInput.classList.remove("highlighted"); // Remove the "highlighted" class
             });
         });
     </script>
