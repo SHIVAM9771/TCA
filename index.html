@@ -359,8 +359,9 @@
 
         <div class="header-menu">
             <ul>
-                <li><a href="ps.html">Position-Calculator</a></li>
+                <li><a href="ps.html">Position-Sizing</a></li>
                 <li><a href="https://www.tradingview.com/chart/" id="tradingViewLink" target="_blank">TradingView</a></li>
+                <li><a href="https://niftychain.in" id="niftyChainLink" target="_blank">AdvanceOptionChain</a></li>
             </ul>
         </div>
          <!-- TradingView Widget BEGIN -->
@@ -799,14 +800,26 @@
             }
         });
         // Get the button and link elements by their IDs
-        const openLinkButton = document.getElementById('openLinkButton');
-        const tradingViewLink = document.getElementById('tradingViewLink');
+    const openTradingViewButton = document.getElementById('openTradingViewButton');
+    const openNiftyChainButton = document.getElementById('openNiftyChainButton');
 
-        // Add a click event listener to the button
-        openLinkButton.addEventListener('click', function () {
-            // Open the link in a new tab when the button is clicked
-            window.open(tradingViewLink.href, '_blank');
-        });
+    // Link URLs
+    const tradingViewLink = 'https://www.tradingview.com/chart/';
+    const niftyChainLink = 'https://niftychain.in';
+
+    // Function to open a link in a new tab
+    function openLinkInNewTab(link) {
+        window.open(link, '_blank');
+    }
+
+    // Add click event listeners to the buttons
+    openTradingViewButton.addEventListener('click', function() {
+        openLinkInNewTab(tradingViewLink);
+    });
+
+    openNiftyChainButton.addEventListener('click', function() {
+        openLinkInNewTab(niftyChainLink);
+    });
     </script>
 </body>
 
