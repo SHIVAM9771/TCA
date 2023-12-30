@@ -1,0 +1,923 @@
+/* styles.css */
+
+:root {
+  --primary-bg: #1c1c1c8f;
+  --primary-textt: rgb(0, 85, 255) f;
+  --primary-text: #fff;
+  --primary-font: "Montserrat", sans-serif;
+  --secondary-bg: #33333391;
+  --box-shadow-color: rgba(0, 0, 0, 0.2);
+  --border-radius: 15px;
+  --transition-duration: 0.3s;
+  --primary-hover-bg: #2c3e50;
+  --secondary-hover-bg: #222;
+  --accent-color: #39818c;
+  --accent-coloro: rgb(255, 255, 255) f;
+  --button-hover-bg: #4faa93;
+  --form-input-padding: 12px;
+}
+
+body {
+  margin: 0;
+  overflow: auto;
+}
+
+#particles-js {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  background-color: #000000;
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo-circle {
+  background: linear-gradient(45deg, #007bff, #ff8d30, #ff5733);
+  border-radius: 50%;
+  width: 70px;
+  height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 20px;
+}
+
+.logo-text {
+  font-family: "Dancing Script", cursive;
+  font-size: 36px;
+  color: var(--primary-textt);
+}
+
+.logo {
+  width: 50px;
+  border-radius: 50%;
+}
+
+.title-slogan {
+  display: flex;
+  flex-direction: column;
+}
+
+.title-slogan h2 {
+  font-size: 24px;
+  color: #007bff;
+  font-weight: bold;
+}
+
+.title-slogan h4 {
+  font-size: 16px;
+  color: #ff8d30;
+  font-weight: normal;
+}
+
+#content {
+  display: flex;
+  flex-direction: row;
+}
+
+#user-input {
+  flex: 0.5;
+  background-color: #33333388;
+  border: 1px solid #555;
+  border-radius: 10px;
+  padding: 20px;
+  margin-right: 20px;
+  height: 640px;
+}
+
+.input-group {
+  margin: 5px 0;
+}
+
+.input-label {
+  font-weight: bold;
+  color: rgb(89, 161, 148);
+}
+
+input[type="number"] {
+  width: 100%;
+  padding: 11px;
+  border: 1px solid #55555578;
+  border-radius: 10px;
+  box-sizing: border-box;
+  background-color: #44444494;
+  color: #ffffff;
+}
+
+.btn-group {
+  text-align: center;
+  margin-top: 10px;
+}
+
+.btn,
+.btn.reset {
+  background-color: #007bff;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  margin: 5px;
+}
+
+.btn.reset {
+  background-color: #ff5733;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  margin: 5px;
+}
+
+.chart {
+  height: 640px;
+  flex: 1.35;
+  position: relative;
+  background-color: #000000be;
+  border-radius: 10px;
+  border: 1px solid #676767;
+}
+
+#myChart {
+  width: 90%;
+}
+
+#results {
+  overflow: auto;
+  max-height: 800px;
+  background-color: #3333337c;
+  border: 1px solid #55555583;
+  border-radius: 10px;
+  padding: 10px;
+  margin-top: 20px;
+}
+
+.header-menu {
+  background-color: #262626b2;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  direction: rtl;
+}
+
+.header-menu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.header-menu li {
+  display: inline;
+  margin-left: 20px;
+}
+
+.header-menu a {
+  text-decoration: none;
+  color: #3b8b79;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.header-menu a:hover {
+  color: var(--accent-coloro); /* Change to your desired accent color */
+}
+
+.animated {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.menu-item {
+  display: inline-block;
+  position: relative;
+  color: #000000;
+  font-weight: bold;
+  font-size: 16px;
+  overflow: hidden;
+  transition: color 0.3s, transform 0.3s;
+}
+
+.menu-item::before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: #4f4040;
+  transform: scaleX(0);
+  transform-origin: bottom right;
+  transition: transform 0.3s;
+}
+
+.menu-item:hover {
+  color: var(--accent-color); /* Change to your desired accent color */
+  transform: scale(1.1); /* Adjust the scaling factor as needed */
+}
+
+.menu-item:hover::before {
+  transform: scaleX(1);
+  transform-origin: bottom left;
+}
+
+.btn:hover {
+  transform: scale(1.05);
+  transition: transform 0.3s;
+}
+
+/* Add hover animations for sections */
+.chart:hover {
+  transform: scale(1.02);
+  transition: transform 0.3s;
+}
+
+/* Add hover animations for the results section */
+#results:hover {
+  transform: scale(1.02);
+  transition: transform 0.3s;
+}
+
+/* Styles for the net profit/loss display */
+.net-profit-loss {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: #fff;
+  border-radius: 5px;
+  padding: 5px;
+  font-size: 14px;
+}
+
+@media (max-width: 768px) {
+  .logo-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .title-slogan {
+    text-align: center;
+    margin-top: 10px;
+  }
+
+  .header-menu {
+    justify-content: center;
+    direction: rtl;
+  }
+
+  #content {
+    flex-direction: column;
+  }
+
+  #user-input,
+  .chart {
+    width: 100%;
+    margin-right: 0;
+  }
+
+  .input-group {
+    margin: 10px 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .logo-text {
+    font-size: 24px;
+  }
+
+  .logo-circle {
+    width: 50px;
+    height: 50px;
+  }
+
+  .input-label {
+    font-size: 14px;
+  }
+
+  input[type="number"] {
+    padding: 10px;
+  }
+
+  .btn,
+  .btn.reset,
+  .btn-group {
+    padding: 8px 16px;
+    font-size: 12px;
+    align-items: center;
+  }
+
+  .net-profit-loss {
+    font-size: 12px;
+  }
+}
+
+.tooltip {
+  visibility: hidden;
+  width: 120px;
+  background-color: #5c5c5c;
+  color: #ffffff;
+  text-align: center;
+  border-radius: 5px;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  margin-left: -60px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.tooltip.show {
+  visibility: visible;
+  opacity: 1;
+}
+
+a {
+  text-decoration: none;
+}
+
+.container {
+  padding: 10px;
+}
+
+.dashboard-container {
+  background-color: var(--secondary-bg);
+  box-shadow: 0 0 20px var(--box-shadow-color);
+  border-radius: var(--border-radius);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0px;
+  padding: 30px;
+  transition: background-color var(--transition-duration) ease,
+    transform var(--transition-duration) ease;
+}
+
+.dashboard-container:hover {
+  background-color: var(--primary-hover-bg);
+  transform: translateY(-5px);
+}
+
+.dashboard-content {
+  flex: 0 1 100%;
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.dashboard-content > div {
+  flex: 1;
+  padding: 20px;
+  border-radius: var(--border-radius);
+  background-color: var(--primary-bg);
+  color: var(--primary-text);
+  transition: background-color var(--transition-duration) ease;
+}
+
+.dashboard-content > div:first-child {
+  margin-bottom: 20px;
+}
+
+.dashboard-container:hover .dashboard-content > div {
+  background-color: var(--secondary-hover-bg);
+}
+
+h1,
+h2 {
+  font-size: 28px;
+  font-weight: 700;
+  font-style: italic;
+  margin-bottom: 20px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+label {
+  display: block;
+  margin-bottom: 10px;
+  color: var(--accent-color);
+  font-weight: 600;
+}
+
+input[type="number"] {
+  width: calc(100% - 2 * var(--form-input-padding));
+  padding: var(--form-input-padding);
+  border: 1px solid #5555556f;
+  background-color: #3c3c3c86;
+  color: #ecf0f1;
+  font-weight: 400;
+  border-radius: 5px;
+  transition: background-color var(--transition-duration) ease;
+}
+
+input[type="number"]:focus {
+  background-color: #5555557f;
+}
+
+button {
+  padding: 12px 20px;
+  background-color: var(--accent-color);
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  border-radius: 5px;
+  transition: background-color var(--transition-duration) ease,
+    transform var(--transition-duration) ease;
+}
+
+button.reset-button {
+  background-color: #e74c3c;
+}
+
+button:hover,
+button.reset-button:hover {
+  background-color: var(--button-hover-bg);
+  transform: scale(1.05);
+}
+
+.result-container {
+  margin-top: 20px;
+}
+
+.result {
+  margin-bottom: 10px;
+}
+
+a {
+  text-decoration: none;
+  color: var(--accent-color);
+  font-weight: 600;
+  position: relative;
+  padding-bottom: 2px;
+  background-image: linear-gradient(
+    120deg,
+    transparent 0%,
+    transparent 100%,
+    var(--accent-color) 0%
+  );
+  background-size: 0% 2px;
+  background-repeat: repeat-x;
+  background-position: 0 100%;
+  transition: background-size 0.3s;
+}
+
+a:hover {
+  background-size: 100% 2px;
+}
+
+#redirectBtn {
+  background-color: var(--button-hover-bg);
+  margin-top: 20px;
+}
+
+#redirectBtn:hover {
+  background-color: #3e8b7a;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: #000000;
+  color: #ffffff;
+  margin-top: 40px;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+#particles-js {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  color: #007bff;
+}
+
+#container {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 1s ease, transform 1s ease;
+  width: 97%;
+  overflow-y: none;
+  max-height: 110vh;
+}
+
+#heading {
+  font-family: "Arial Black", sans-serif;
+  font-size: 32px;
+  text-align: center;
+  margin-bottom: 15px;
+  color: #007bff;
+  background-color: #4d4d4d83;
+}
+
+#maxLoss {
+  position: absolute;
+  top: 10px;
+  left: 100px;
+  /* Adjust the left position based on your design */
+  background-color: #000000;
+  /* Red background color with transparency */
+  color: #f90000;
+  border-radius: 5px;
+  padding: 5px;
+  font-size: 14px;
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.logo-circle {
+  background: linear-gradient(45deg, #007bff, #ff8d30, #ff5733);
+  border-radius: 50%;
+  width: 70px;
+  height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 20px;
+}
+
+.logo-text {
+  font-family: "Dancing Script", cursive;
+  font-size: 36px;
+  color: var(--primary-textt);
+}
+
+.logo {
+  width: 50px;
+  border-radius: 50%;
+}
+
+.title-slogan {
+  display: flex;
+  flex-direction: column;
+}
+
+.title-slogan h2 {
+  font-size: 24px;
+  color: #007bff;
+  font-weight: bold;
+}
+
+.title-slogan h4 {
+  font-size: 16px;
+  color: #ff8d30;
+  font-weight: normal;
+}
+
+#content {
+  display: flex;
+  flex-direction: row;
+}
+
+#user-input {
+  flex: 0.5;
+  background-color: #33333388;
+  border: 1px solid #555;
+  border-radius: 10px;
+  padding: 20px;
+  margin-right: 20px;
+  height: 640px;
+}
+
+.input-group {
+  margin: 5px 0;
+}
+
+.input-label {
+  font-weight: bold;
+  color: rgb(89, 161, 148);
+}
+
+input[type="number"] {
+  width: 100%;
+  padding: 11px;
+  border: 1px solid #55555578;
+  border-radius: 10px;
+  box-sizing: border-box;
+  background-color: #44444494;
+  color: #ffffff;
+}
+
+.btn-group {
+  text-align: center;
+  margin-top: 10px;
+}
+
+.btn,
+.btn.reset {
+  background-color: #007bff;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  margin: 5px;
+}
+
+.btn.reset {
+  background-color: #ff5733;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  margin: 5px;
+}
+
+.chart {
+  height: 640px;
+  flex: 1.35;
+  position: relative;
+  background-color: #000000be;
+  border-radius: 10px;
+  border: 1px solid #676767;
+}
+
+/* Add these styles to make the buttons look similar */
+
+.btn.htk {
+  /* Common styles for htk buttons */
+  background-color: #007bff;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  margin: 5px;
+}
+
+.btn.htk:hover {
+  transform: scale(1.05);
+  transition: transform 0.3s;
+}
+
+.btn.reset {
+  /* Styles for the reset button */
+  background-color: #ff5733;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  margin: 5px;
+}
+
+.btn.reset:hover {
+  transform: scale(1.05);
+  transition: transform 0.3s;
+}
+
+/* Add hover animations for all buttons */
+.btn-group .btn:hover {
+  transform: scale(1.05);
+  transition: transform 0.3s;
+}
+
+/* Add a top margin to the .btn-group element within the .chart */
+.btn-group {
+  text-align: center;
+  margin-top: 50px;
+  margin-right: 20px;
+  margin-left: 20px; /* Adjust the margin-top value as needed */
+}
+
+/* Rest of the existing styles */
+#myChart {
+  width: 90%;
+}
+
+#results {
+  overflow: auto;
+  max-height: 800px;
+  background-color: #3333337c;
+  border: 1px solid #55555583;
+  border-radius: 10px;
+  padding: 10px;
+  margin-top: 20px;
+}
+
+.header-menu {
+  background-color: #262626b2;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  direction: rtl;
+}
+
+.header-menu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.header-menu li {
+  display: inline;
+  margin-left: 20px;
+}
+
+.header-menu a {
+  text-decoration: none;
+  color: #3b8b79;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.animated {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.btn:hover {
+  transform: scale(1.05);
+  transition: transform 0.3s;
+}
+
+/* Add hover animations for sections */
+.chart:hover {
+  transform: scale(1.02);
+  transition: transform 0.3s;
+}
+
+/* Add hover animations for the results section */
+#results:hover {
+  transform: scale(1.02);
+  transition: transform 0.3s;
+}
+
+/* Styles for the net profit/loss display */
+.net-profit-loss {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: #fff;
+  border-radius: 5px;
+  padding: 5px;
+  font-size: 14px;
+}
+
+/* Animation keyframes for click effect */
+@keyframes zoomIn {
+  0% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.2);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+@media (max-width: 768px) {
+  .logo-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .title-slogan {
+    text-align: center;
+    margin-top: 10px;
+  }
+
+  .header-menu {
+    justify-content: center;
+  }
+
+  #content {
+    flex-direction: column;
+  }
+
+  #user-input,
+  .chart {
+    width: 100%;
+    margin-right: 0;
+  }
+
+  .input-group {
+    margin: 10px 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .logo-text {
+    font-size: 24px;
+  }
+
+  .logo-circle {
+    width: 50px;
+    height: 50px;
+  }
+
+  .input-label {
+    font-size: 14px;
+  }
+
+  input[type="number"] {
+    padding: 10px;
+  }
+
+  .btn,
+  .btn.reset,
+  .btn-group {
+    padding: 8px 16px;
+    font-size: 12px;
+    align-items: center;
+  }
+
+  .net-profit-loss {
+    font-size: 12px;
+  }
+}
+
+.tooltip {
+  visibility: hidden;
+  width: 120px;
+  background-color: #5c5c5c;
+  color: #ffffff;
+  text-align: center;
+  border-radius: 5px;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  margin-left: -60px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.tooltip.show {
+  visibility: visible;
+  opacity: 1;
+}
+
+a {
+  text-decoration: none;
+}
+
+.menu-item {
+  display: inline-block;
+  position: relative;
+  color: #000000;
+  font-weight: bold;
+  font-size: 16px;
+  overflow: hidden;
+  transition: color 0.3s, transform 0.3s;
+}
+
+.menu-item::before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: #4f4040;
+  transform: scaleX(0);
+  transform-origin: bottom right;
+  transition: transform 0.3s;
+}
+
+.menu-item:hover {
+  color: var(--accent-color); /* Change to your desired accent color */
+  transform: scale(1.1); /* Adjust the scaling factor as needed */
+}
+
+.menu-item:hover::before {
+  transform: scaleX(1);
+  transform-origin: bottom left;
+}
+.error {
+  border: 2px solid red;
+}
