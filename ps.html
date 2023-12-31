@@ -52,16 +52,21 @@
             </div>
 
 
+            <!-- Add a menu toggle button for mobile -->
+            <div class="menu-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+
             <div class="header-menu">
                 <ul>
-
-
                     <li><a href="https://www.tradingview.com/chart/" id="tradingViewLink" target="_blank"
-                            class="menu-item ">TradingView</a></li>
+                            class="menu-item animated">TradingView</a></li>
                     <li><a href="https://niftychain.in/optionchain?symbol=NIFTY" id="niftyChainLink" target="_blank"
-                            class="menu-item">AdvanceOptionChain</a></li>
-                    <li><a href="ps.html" class="menu-item ">Position-Sizing</a></li>
-                    <li><a href="index.html" class="menu-item">Home</a></li>
+                            class="menu-item animated">AdvanceOptionChain</a></li>
+                    <li><a href="ps.html" class="menu-item animated">Position-Sizing</a></li>
+                    <li><a href="index.html" class="menu-item animated">Home</a></li>
                 </ul>
             </div>
         </div>
@@ -199,6 +204,76 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 
 </body>
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('.menu-toggle').click(function () {
+            $(this).toggleClass('active');
+            $('.header-menu').toggleClass('active');
+        });
+    });
+</script>
+
+<script>
+    // Function to handle mouse wheel event for input fields
+    function handleMouseWheel(event, inputId) {
+        // Prevent the default behavior of mouse wheel (e.g., page scrolling)
+        event.preventDefault();
+
+        // Get the input element by its ID
+        const inputElement = document.getElementById(inputId);
+
+        // Calculate the new value based on the wheel delta
+        const delta = Math.max(-1, Math.min(1, event.deltaY || -event.detail));
+        const step = inputElement.step ? parseFloat(inputElement.step) : 1;
+        const newValue = parseFloat(inputElement.value) + step * delta;
+
+        // Update the input value within its min and max range
+        inputElement.value = Math.min(
+            Math.max(newValue, parseFloat(inputElement.min) || -Infinity),
+            parseFloat(inputElement.max) || Infinity
+        );
+
+        // Trigger the input event to update any associated logic
+        inputElement.dispatchEvent(new Event('input'));
+    }
+    //document.getElementById('position-sizing-form').addEventListener('wheel', handleScrollInput);
+    document.getElementById('accountBalance').addEventListener('wheel', (event) => handleMouseWheel(event, 'accountBalance'));
+    document.getElementById('riskPercentage').addEventListener('wheel', (event) => handleMouseWheel(event, 'riskPercentage'));
+    //  document.getElementById('riskReward').addEventListener('wheel', (event) => handleMouseWheel(event, 'riskReward'));
+    document.getElementById('lotsize').addEventListener('wheel', (event) => handleMouseWheel(event, 'lotsize'));
+    document.getElementById('entryPrice').addEventListener('wheel', (event) => handleMouseWheel(event, 'entryPrice'));
+    document.getElementById('stopLoss').addEventListener('wheel', (event) => handleMouseWheel(event, 'stopLoss'));
+</script>
+
+<script>
+    function handleRiskRewardScroll(event) {
+        event.preventDefault();
+
+        const riskRewardInput = document.getElementById('riskReward');
+
+        const delta = Math.max(-1, Math.min(1, event.deltaY || -event.detail));
+        const step = riskRewardInput.step ? parseFloat(riskRewardInput.step) : 0.01;
+
+        // Calculate the precision based on the step value
+        const precision = step.toString().split('.')[1] ? step.toString().split('.')[1].length : 0;
+
+        // Update the input value with precision
+        let newValue = parseFloat(riskRewardInput.value) + step * delta;
+        newValue = parseFloat(newValue.toFixed(precision));
+
+        riskRewardInput.value = Math.min(
+            Math.max(newValue, parseFloat(riskRewardInput.min) || -Infinity),
+            parseFloat(riskRewardInput.max) || Infinity
+        );
+
+        riskRewardInput.dispatchEvent(new Event('input'));
+    }
+
+    document.getElementById('riskReward').addEventListener('wheel', handleRiskRewardScroll);
+</script>
+
 
 <script>
     // Add this JavaScript to toggle the 'active' class on click
