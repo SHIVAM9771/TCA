@@ -6,7 +6,7 @@
   --primary-text: #fff;
   --primary-font: "Montserrat", sans-serif;
   --secondary-bg: #33333391;
-  --box-shadow-color: rgba(0, 0, 0, 0.2);
+  --box-shadow-color: rgba(32, 32, 32, 0.2);
   --border-radius: 15px;
   --transition-duration: 0.3s;
   --primary-hover-bg: #2c3e50;
@@ -17,11 +17,6 @@
   --form-input-padding: 12px;
 }
 
-body {
-  margin: 0;
-  overflow: auto;
-}
-
 #particles-js {
   position: fixed;
   top: 0;
@@ -29,6 +24,7 @@ body {
   width: 100%;
   height: 100%;
   z-index: -1;
+  color: #007bff;
   background-color: #000000;
 }
 
@@ -45,7 +41,7 @@ body {
 }
 
 .logo-circle {
-  background: linear-gradient(45deg, #007bff, #ff8d30, #ff5733);
+  background: linear-gradient(45deg, #0059ff, #da9d2b, #ff2f007a);
   border-radius: 50%;
   width: 70px;
   height: 70px;
@@ -58,7 +54,7 @@ body {
 .logo-text {
   font-family: "Dancing Script", cursive;
   font-size: 36px;
-  color: var(--primary-textt);
+  color:rgb(0, 85, 255);
 }
 
 .logo {
@@ -92,14 +88,14 @@ body {
   flex: 0.5;
   background-color: #33333388;
   border: 1px solid #555;
-  border-radius: 10px;
+  border-radius: 15px;
   padding: 20px;
   margin-right: 20px;
-  height: 640px;
+  height: 650px;
 }
 
 .input-group {
-  margin: 5px 0;
+  margin: 3px 0;
 }
 
 .input-label {
@@ -111,7 +107,7 @@ input[type="number"] {
   width: 100%;
   padding: 11px;
   border: 1px solid #55555578;
-  border-radius: 10px;
+  border-radius: 20px;
   box-sizing: border-box;
   background-color: #44444494;
   color: #ffffff;
@@ -144,7 +140,7 @@ input[type="number"] {
 }
 
 .chart {
-  height: 640px;
+  height: 650px;
   flex: 1.35;
   position: relative;
   background-color: #000000be;
@@ -167,12 +163,13 @@ input[type="number"] {
 }
 
 .header-menu {
-  background-color: #262626b2;
+  background-color: #7d7d7d33;
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 10px 20px;
   direction: rtl;
+  border-radius: 20px;
 }
 
 .header-menu ul {
@@ -188,7 +185,7 @@ input[type="number"] {
 
 .header-menu a {
   text-decoration: none;
-  color: #3b8b79;
+  color: #9b9b9b;
   font-weight: bold;
   font-size: 16px;
 }
@@ -205,7 +202,7 @@ input[type="number"] {
 .menu-item {
   display: inline-block;
   position: relative;
-  color: #000000;
+  color: #878585;
   font-weight: bold;
   font-size: 16px;
   overflow: hidden;
@@ -346,10 +343,6 @@ input[type="number"] {
 .tooltip.show {
   visibility: visible;
   opacity: 1;
-}
-
-a {
-  text-decoration: none;
 }
 
 .container {
@@ -505,14 +498,8 @@ body {
   justify-content: center;
   align-items: center;
   height: 100vh;
-}
-
-#particles-js {
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  z-index: -1;
-  color: #007bff;
+  /*margin: 0;*/
+  overflow: auto;
 }
 
 #container {
@@ -545,122 +532,6 @@ body {
   padding: 5px;
   font-size: 14px;
 }
-
-.logo-container {
-  display: flex;
-  align-items: center;
-  margin-bottom: 20px;
-}
-
-.logo-circle {
-  background: linear-gradient(45deg, #007bff, #ff8d30, #ff5733);
-  border-radius: 50%;
-  width: 70px;
-  height: 70px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-right: 20px;
-}
-
-.logo-text {
-  font-family: "Dancing Script", cursive;
-  font-size: 36px;
-  color: var(--primary-textt);
-}
-
-.logo {
-  width: 50px;
-  border-radius: 50%;
-}
-
-.title-slogan {
-  display: flex;
-  flex-direction: column;
-}
-
-.title-slogan h2 {
-  font-size: 24px;
-  color: #007bff;
-  font-weight: bold;
-}
-
-.title-slogan h4 {
-  font-size: 16px;
-  color: #ff8d30;
-  font-weight: normal;
-}
-
-#content {
-  display: flex;
-  flex-direction: row;
-}
-
-#user-input {
-  flex: 0.5;
-  background-color: #33333388;
-  border: 1px solid #555;
-  border-radius: 10px;
-  padding: 20px;
-  margin-right: 20px;
-  height: 640px;
-}
-
-.input-group {
-  margin: 5px 0;
-}
-
-.input-label {
-  font-weight: bold;
-  color: rgb(89, 161, 148);
-}
-
-input[type="number"] {
-  width: 100%;
-  padding: 11px;
-  border: 1px solid #55555578;
-  border-radius: 10px;
-  box-sizing: border-box;
-  background-color: #44444494;
-  color: #ffffff;
-}
-
-.btn-group {
-  text-align: center;
-  margin-top: 10px;
-}
-
-.btn,
-.btn.reset {
-  background-color: #007bff;
-  color: white;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
-  margin: 5px;
-}
-
-.btn.reset {
-  background-color: #ff5733;
-  color: white;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
-  margin: 5px;
-}
-
-.chart {
-  height: 640px;
-  flex: 1.35;
-  position: relative;
-  background-color: #000000be;
-  border-radius: 10px;
-  border: 1px solid #676767;
-}
-
-/* Add these styles to make the buttons look similar */
 
 .btn.htk {
   /* Common styles for htk buttons */
@@ -700,7 +571,7 @@ input[type="number"] {
   transition: transform 0.3s;
 }
 
-/* Add a top margin to the .btn-group element within the .chart */
+/* Add a top margin to the .btn-group element within the .chart*/
 .btn-group {
   text-align: center;
   margin-top: 50px;
@@ -708,61 +579,8 @@ input[type="number"] {
   margin-left: 20px; /* Adjust the margin-top value as needed */
 }
 
-/* Rest of the existing styles */
-#myChart {
-  width: 90%;
-}
-
-#results {
-  overflow: auto;
-  max-height: 800px;
-  background-color: #3333337c;
-  border: 1px solid #55555583;
-  border-radius: 10px;
-  padding: 10px;
-  margin-top: 20px;
-}
-
-.header-menu {
-  background-color: #262626b2;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px 20px;
-  direction: rtl;
-}
-
-.header-menu ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.header-menu li {
-  display: inline;
-  margin-left: 20px;
-}
-
-.header-menu a {
-  text-decoration: none;
-  color: #3b8b79;
-  font-weight: bold;
-  font-size: 16px;
-}
-
-.animated {
-  opacity: 1;
-  transform: translateY(0);
-}
-
 .btn:hover {
   transform: scale(1.05);
-  transition: transform 0.3s;
-}
-
-/* Add hover animations for sections */
-.chart:hover {
-  transform: scale(1.02);
   transition: transform 0.3s;
 }
 
@@ -799,125 +617,97 @@ input[type="number"] {
   }
 }
 
-@media (max-width: 768px) {
-  .logo-container {
-    flex-direction: column;
-    align-items: center;
-  }
+.error {
+  border: 2px solid red;
+}
 
-  .title-slogan {
-    text-align: center;
-    margin-top: 10px;
+/* Default styles for larger screens */
+.header-menu {
+  display: block;
+}
+
+/* Styles for smaller screens (e.g., mobile devices) */
+@media screen and (max-width: 768px) {
+  body.menu-active {
+    overflow: hidden; /* Prevent scrolling when the menu is active */
   }
 
   .header-menu {
-    justify-content: center;
+    display: none;
+    position: fixed;
+    top: 0;
+    right: -100%; /* Initially off-screen */
+    height: 100vh;
+    width: 50%; /* Adjust the width of the menu */
+    background-color: #333; /* Dark background color for the mobile menu */
+    box-shadow: 0 4px 8px rgba(113, 113, 113, 0.1);
+    transition: right 1s ease-in-out; /* Increase duration for the menu */
+    z-index: 1;
   }
 
-  #content {
-    flex-direction: column;
+  .header-menu.active {
+    right: 0;
+    display: block; /* Add this line to make the menu visible when active */
+    transform: translateY(0);
+    /* Bring the menu on-screen when active */
   }
 
-  #user-input,
-  .chart {
-    width: 100%;
-    margin-right: 0;
+  .header-menu.active + #container {
+    transform: translateX(
+      -50%
+    ); /* Slide the container to the left when the menu is active */
+    transition: transform 1s ease-in-out; /* Increase duration for the sliding effect */
   }
 
-  .input-group {
-    margin: 10px 0;
-  }
-}
-
-@media (max-width: 480px) {
-  .logo-text {
-    font-size: 24px;
-  }
-
-  .logo-circle {
-    width: 50px;
-    height: 50px;
+  .header-menu ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column-reverse; /* Reverse the order of menu items */
+    z-index: 2; /* Ensure menu items are on top */
   }
 
-  .input-label {
-    font-size: 14px;
+  .menu-item {
+    display: block;
+    padding: 15px;
+    text-align: center;
+    text-decoration: none;
+    color: #fff; /* Text color for menu items in dark theme */
+    transition: background-color 0.3s ease-in-out;
   }
 
-  input[type="number"] {
-    padding: 10px;
+  .menu-item:hover {
+    background-color: #555; /* Highlight color on hover in dark theme */
   }
 
-  .btn,
-  .btn.reset,
-  .btn-group {
-    padding: 8px 16px;
-    font-size: 12px;
-    align-items: center;
+  .menu-toggle {
+    display: block;
+    cursor: pointer;
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 3; /* Ensure the hamburger icon is on top of the menu */
   }
 
-  .net-profit-loss {
-    font-size: 12px;
+  .menu-toggle span {
+    display: block;
+    width: 30px;
+    height: 3px;
+    background-color: #fff; /* Color of the hamburger lines */
+    margin: 6px 0;
+    transition: 0.4s;
   }
-}
 
-.tooltip {
-  visibility: hidden;
-  width: 120px;
-  background-color: #5c5c5c;
-  color: #ffffff;
-  text-align: center;
-  border-radius: 5px;
-  padding: 5px 0;
-  position: absolute;
-  z-index: 1;
-  bottom: 125%;
-  left: 50%;
-  margin-left: -60px;
-  opacity: 0;
-  transition: opacity 0.3s;
-}
+  .menu-toggle.active span:nth-child(1) {
+    transform: rotate(-45deg) translate(-5px, 6px);
+  }
 
-.tooltip.show {
-  visibility: visible;
-  opacity: 1;
-}
+  .menu-toggle.active span:nth-child(2) {
+    opacity: 0;
+  }
 
-a {
-  text-decoration: none;
-}
-
-.menu-item {
-  display: inline-block;
-  position: relative;
-  color: #000000;
-  font-weight: bold;
-  font-size: 16px;
-  overflow: hidden;
-  transition: color 0.3s, transform 0.3s;
-}
-
-.menu-item::before {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 2px;
-  background: #4f4040;
-  transform: scaleX(0);
-  transform-origin: bottom right;
-  transition: transform 0.3s;
-}
-
-.menu-item:hover {
-  color: var(--accent-color); /* Change to your desired accent color */
-  transform: scale(1.1); /* Adjust the scaling factor as needed */
-}
-
-.menu-item:hover::before {
-  transform: scaleX(1);
-  transform-origin: bottom left;
-}
-.error {
-  border: 2px solid red;
+  .menu-toggle.active span:nth-child(3) {
+    transform: rotate(45deg) translate(-5px, -6px);
+  }
 }
