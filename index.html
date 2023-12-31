@@ -22,7 +22,6 @@
     <div id="particles-js"></div>
     <div id="container">
         <div class="header">
-            <!-- <div id="container">-->
             <div class="logo-container">
                 <div class="logo-circle">
                     <a href="index.html"><img class="logo"
@@ -40,10 +39,17 @@
             </div>
 
 
+            <!-- Add a menu toggle button for mobile -->
+            <div class="menu-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+
             <div class="header-menu">
                 <ul>
                     <li><a href="https://www.tradingview.com/chart/" id="tradingViewLink" target="_blank"
-                            class="menu-item animated">TradingView</a></li>
+                            class="menu-item animated">Trading View</a></li>
                     <li><a href="https://niftychain.in/optionchain?symbol=NIFTY" id="niftyChainLink" target="_blank"
                             class="menu-item animated">AdvanceOptionChain</a></li>
                     <li><a href="ps.html" class="menu-item animated">Position-Sizing</a></li>
@@ -51,6 +57,9 @@
                 </ul>
             </div>
         </div>
+
+
+
 
         <!-- TradingView Widget BEGIN -->
         <div class="tradingview-widget-container">
@@ -301,11 +310,85 @@
         </div>
 
     </div>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('.menu-toggle').click(function () {
+                $(this).toggleClass('active');
+                $('.header-menu').toggleClass('active');
+            });
+        });
+    </script>
+
+    <script>
+        // Function to handle mouse wheel event for input fields
+        function handleMouseWheel(event, inputId) {
+            // Prevent the default behavior of mouse wheel (e.g., page scrolling)
+            event.preventDefault();
+
+            // Get the input element by its ID
+            const inputElement = document.getElementById(inputId);
+
+            // Calculate the new value based on the wheel delta
+            const delta = Math.max(-1, Math.min(1, event.deltaY || -event.detail));
+            const step = inputElement.step ? parseFloat(inputElement.step) : 1;
+            const newValue = parseFloat(inputElement.value) + step * delta;
+
+            // Update the input value within its min and max range
+            inputElement.value = Math.min(
+                Math.max(newValue, parseFloat(inputElement.min) || -Infinity),
+                parseFloat(inputElement.max) || Infinity
+            );
+
+            // Trigger the input event to update any associated logic
+            inputElement.dispatchEvent(new Event('input'));
+        }
+
+        // Attach the mouse wheel event listener to the input fields
+        document.getElementById('tradePerDay').addEventListener('wheel', (event) => handleMouseWheel(event, 'tradePerDay'));
+        document.getElementById('numDays').addEventListener('wheel', (event) => handleMouseWheel(event, 'numDays'));
+        //  document.getElementById('riskReward').addEventListener('wheel', (event) => handleMouseWheel(event, 'riskReward'));
+        document.getElementById('tradeAmount').addEventListener('wheel', (event) => handleMouseWheel(event, 'tradeAmount'));
+        document.getElementById('chancePercent').addEventListener('wheel', (event) => handleMouseWheel(event, 'chancePercent'));
+        document.getElementById('chargesPerTrade').addEventListener('wheel', (event) => handleMouseWheel(event, 'chargesPerTrade'));
+        document.getElementById('ndtpc').addEventListener('wheel', (event) => handleMouseWheel(event, 'ndtpc'));
+    </script>
+
+    <script>
+        function handleRiskRewardScroll(event) {
+            event.preventDefault();
+
+            const riskRewardInput = document.getElementById('riskReward');
+
+            const delta = Math.max(-1, Math.min(1, event.deltaY || -event.detail));
+            const step = riskRewardInput.step ? parseFloat(riskRewardInput.step) : 0.01;
+
+            // Calculate the precision based on the step value
+            const precision = step.toString().split('.')[1] ? step.toString().split('.')[1].length : 0;
+
+            // Update the input value with precision
+            let newValue = parseFloat(riskRewardInput.value) + step * delta;
+            newValue = parseFloat(newValue.toFixed(precision));
+
+            riskRewardInput.value = Math.min(
+                Math.max(newValue, parseFloat(riskRewardInput.min) || -Infinity),
+                parseFloat(riskRewardInput.max) || Infinity
+            );
+
+            riskRewardInput.dispatchEvent(new Event('input'));
+        }
+
+        document.getElementById('riskReward').addEventListener('wheel', handleRiskRewardScroll);
+    </script>
+
+
+
+
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-zoom/0.7.7/chartjs-plugin-zoom.min.js"></script>
     <script>
 
-        // Add this JavaScript to toggle the 'active' class on click
+        //  Add this JavaScript to toggle the 'active' class on click
         document.querySelectorAll('.menu-item').forEach(item => {
             item.addEventListener('click', () => {
                 item.classList.toggle('active');
@@ -422,8 +505,7 @@
 
             // Event listener for the "Calculate" butto
 
-            // Event listener for the "Generate" button
-            generateButton.addEventListener("click", function () {
+            function handleGenerateButtonClick() {
                 // Clear the existing generated trades and net profit/loss values
                 generatedTrades = [];
                 netProfitLossValues = [];
@@ -451,7 +533,6 @@
 
                     for (let trade = 0; trade < tradePerDay; trade++) {
                         const randomOutcome = trueRandomNumber() * 100;
-                        //Math.random() * 100; // Generate a random number between 0 and 100
 
                         if (randomOutcome < chancePercent) {  // Check if it's a win based on chance percent
                             const winAmount = tradeAmount * riskReward;
@@ -530,7 +611,10 @@
 
                 // Calculate max drawdown
                 document.getElementById("maxLoss").textContent = `Max Loss: ${calculatedMaxDrawdown}`;
-            });
+            }
+
+            // Event listener for the "Generate" button
+            generateButton.addEventListener("click", handleGenerateButtonClick);
 
             // Event listener for mouseover event on the "Generate" button
             generateButton.addEventListener("mouseover", function () {
@@ -543,7 +627,7 @@
                 // Hide the tooltip message when the mouse is not hovering over the button
                 tooltipMessage.classList.remove("show");
             });
-            // Event listener for the "Reset" button
+
             resetButton.addEventListener("click", function () {
                 // Reset input values and clear the results and chart
                 document.querySelector("#tradePerDay").value = '';
@@ -578,15 +662,6 @@
                 return randomArray[0] / (2 ** 32);
             }
 
-            // ...
-
-            // for (let trade = 0; trade < tradePerDay; trade++) {
-            //     const randomOutcome = trueRandomNumber() * 100;
-            //     
-            //     // Continue with the rest of your logic...
-            // }
-
-
             // Function to calculate the maximum drawdown
             function calculateMaxDrawdown(profitLossPerDay) {
                 let maxLoss = 0;
@@ -606,27 +681,7 @@
                 return Math.abs(maxLoss); // Return the maximum loss as a positive value
             }
         });
-        // Get the button and link elements by their IDs
-        const openTradingViewButton = document.getElementById('openTradingViewButton');
-        const openNiftyChainButton = document.getElementById('openNiftyChainButton');
 
-        // Link URLs
-        const tradingViewLink = 'https://www.tradingview.com/chart/';
-        const niftyChainLink = 'https://niftychain.in/optionchain?symbol=NIFTY';
-
-        // Function to open a link in a new tab
-        function openLinkInNewTab(link) {
-            window.open(link, '_blank');
-        }
-
-        // Add click event listeners to the buttons
-        openTradingViewButton.addEventListener('click', function () {
-            openLinkInNewTab(tradingViewLink);
-        });
-
-        openNiftyChainButton.addEventListener('click', function () {
-            openLinkInNewTab(niftyChainLink);
-        });
     </script>
 </body>
 
