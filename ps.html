@@ -126,37 +126,38 @@
                                     <div class="form-group">
                                         <label for="accountBalance">Account Balance ($):</label>
                                         <input type="number" id="accountBalance"
-                                            placeholder="Enter your account balance" value="50000" required />
+                                            placeholder="Enter your account balance" value="50000" min="0"
+                                            max="10000000000000" required />
                                     </div>
 
                                     <div class="form-group">
                                         <label for="riskPercentage">Risk Amount Per Trade:</label>
                                         <input type="number" id="riskPercentage" placeholder="Enter your risk Amount"
-                                            value="500" required />
+                                            value="500" min="0" max="100000000000" required />
                                     </div>
 
                                     <div class="form-group">
                                         <label for="lotsize">Lot Size:</label>
                                         <input type="number" id="lotsize" placeholder="Enter lot size" value="15"
-                                            required />
+                                            min="1" max="1000000000000" required />
                                     </div>
 
                                     <div class="form-group">
                                         <label for="riskReward">Risk Reward Ratio:</label>
                                         <input type="number" id="riskReward" placeholder="Enter risk reward ratio"
-                                            value="3.0" required />
+                                            value="3.0" min="0.01" max="100" required />
                                     </div>
 
                                     <div class="form-group">
                                         <label for="entryPrice">Entry Price:</label>
                                         <input type="number" id="entryPrice" placeholder="Enter entry price" value="100"
-                                            required />
+                                            min="0.5" max="1000000000000000000" required />
                                     </div>
 
                                     <div class="form-group">
                                         <label for="stopLoss">Stop Loss ($):</label>
                                         <input type="number" id="stopLoss" placeholder="Enter your stop loss" value="20"
-                                            required />
+                                            min="0" max="1000000000000" required />
                                     </div>
 
                                     <button type="button" id="calculateButton" class="btn btn-primary">Calculate
@@ -231,7 +232,7 @@
 
         // Update the input value within its min and max range
         inputElement.value = Math.min(
-            Math.max(newValue, parseFloat(inputElement.min) || -Infinity),
+            Math.max(newValue, parseFloat(inputElement.min)),
             parseFloat(inputElement.max) || Infinity
         );
 
@@ -264,7 +265,7 @@
         newValue = parseFloat(newValue.toFixed(precision));
 
         riskRewardInput.value = Math.min(
-            Math.max(newValue, parseFloat(riskRewardInput.min) || -Infinity),
+            Math.max(newValue, parseFloat(riskRewardInput.min)),
             parseFloat(riskRewardInput.max) || Infinity
         );
 
