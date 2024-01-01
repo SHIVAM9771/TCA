@@ -129,7 +129,7 @@
                 <div class="input-group">
                     <label class="input-label" for="tradeAmount">Loss per Trade:</label>
                     <input type="number" id="tradeAmount" placeholder="Enter loss amount per trade" value="500" min="0"
-                        required />
+                        max="100000000000000" required />
                 </div>
 
                 <div class="input-group">
@@ -141,7 +141,7 @@
                 <div class="input-group">
                     <label class="input-label" for="chargesPerTrade">Charges per Trade:</label>
                     <input type="number" id="chargesPerTrade" placeholder="Enter charges per trade" value="56" min="0"
-                        required />
+                        max="1000000" required />
                 </div>
 
                 <div class="input-group">
@@ -336,7 +336,7 @@
 
             // Update the input value within its min and max range
             inputElement.value = Math.min(
-                Math.max(newValue, parseFloat(inputElement.min) || -Infinity),
+                Math.max(newValue, parseFloat(inputElement.min)), //|| -Infinity),
                 parseFloat(inputElement.max) || Infinity
             );
 
@@ -371,7 +371,7 @@
             newValue = parseFloat(newValue.toFixed(precision));
 
             riskRewardInput.value = Math.min(
-                Math.max(newValue, parseFloat(riskRewardInput.min) || -Infinity),
+                Math.max(newValue, parseFloat(riskRewardInput.min)),
                 parseFloat(riskRewardInput.max) || Infinity
             );
 
