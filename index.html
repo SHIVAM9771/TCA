@@ -168,6 +168,7 @@
                     const riskReward = parseFloat(document.querySelector("#riskReward").value);
                     const tradeAmount = parseFloat(document.querySelector("#tradeAmount").value);
                     const chancePercent = parseFloat(document.querySelector("#chancePercent").value);
+                    const chargesPerTrade = parseFloat(document.querySelector("#chargesPerTrade").value);
 
                     let profitCount = 0;
                     let lossCount = 0;
@@ -188,9 +189,9 @@
                             return;
                         }
 
-                        // Recursive calls to calculate different trade outcomes
-                        calculateCombinations(remainingTrades - 1, currentProfitLoss + tradeAmount * riskReward);
-                        calculateCombinations(remainingTrades - 1, currentProfitLoss - tradeAmount);
+                        // Recursive calls to calculate different trade outcomes with charges deducted/added
+                        calculateCombinations(remainingTrades - 1, currentProfitLoss + (tradeAmount * riskReward) - chargesPerTrade);
+                        calculateCombinations(remainingTrades - 1, currentProfitLoss - (tradeAmount + chargesPerTrade));
                     }
 
                     // Start the calculation
